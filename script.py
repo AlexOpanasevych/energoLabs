@@ -140,7 +140,7 @@ class StockExample(server.App):
 
     tabs = ["Plot", "Second",
             "Моделювання графіка електричного навантаження"]
-# Теплотехнічні характеристики будівлі, потреба у тепловій енергії на опалення, ГВП та вентилювання
+    # Теплотехнічні характеристики будівлі, потреба у тепловій енергії на опалення, ГВП та вентилювання
     outputs = [{"type": "plot",
                 "id": "plot",
                 "control_id": "update_data",
@@ -368,6 +368,8 @@ class StockExample(server.App):
                "rgba(255,255,255,1) 100%)} "
 
 
+port = 8082
 if __name__ == '__main__':
     app = StockExample()
-    app.launch(port=8081)
+
+    app.launch(port=port)
