@@ -149,8 +149,7 @@ class StockExample(server.App):
     controls = [{"type": "button", "label" : "Update Data",
                  "id": "update_data"}]
 
-    tabs = ["Plot", "Second",
-            "Моделювання графіка електричного навантаження"]
+    tabs = ["Plot", "Second",]
     # Теплотехнічні характеристики будівлі, потреба у тепловій енергії на опалення, ГВП та вентилювання
     outputs = [{"type": "plot",
                 "id": "plot",

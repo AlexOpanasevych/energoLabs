@@ -5,15 +5,16 @@ import QtWebEngine 1.10
 
 Item {
     id: root
-    width: 1920
-    height: 1080
+    width: 1280
+    height: 700
+    //visibility: "Maximized"
     TabView {
         anchors.fill: parent
         Tab {
             title: "Аналіз метеорологічних даних регіону | Теплотехнічні характеристики будівлі, потреба у тепловій енергії на опалення, ГВП та вентилювання"
             WebEngineView {
                 anchors.fill: parent
-                url: "http://127.0.0.1:" + 8082
+                url: "http://127.0.0.1:" + 8087
             }
         }
         Tab {
