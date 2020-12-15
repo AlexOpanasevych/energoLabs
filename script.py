@@ -387,6 +387,7 @@ class StockExample(server.App):
                "rgba(255,255,255,1) 100%)} "
 
 
+port = 8087
 if __name__ == '__main__':
     app = StockExample()
-    app.launch(port=8087)
+    app.launch(port=port)
