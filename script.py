@@ -259,8 +259,8 @@ class StockExample(server.App):
         plt_obj = None
         LIST_CITY = ["львов+", "кривой_рог+", "симферополь+", "и_франк+", "донецк+", "харьков+", "днепропетровськ+",
                      "киев+", "одесса+", "луганськ+"]
-        citys = params["city"]
-        index = LIST_CITY.index(citys + "+")
+        cities = params["city"]
+        index = LIST_CITY.index(cities + "+")
         df = pd.read_csv(str(index) + ".csv", index_col=0)
         df = df.set_index(df['UTC'])
         date_f = params["date"].split("-")[0]
@@ -277,9 +277,9 @@ class StockExample(server.App):
             del df["hhh"]
             del df["Unnamed: 0.1"]
             plt_obj = df.plot(figsize=(30, 10))
-            plt_obj.set_ylabel("Sun Izo")
-            plt_obj.set_xlabel("Date")
-            plt_obj.set_title(citys)
+            plt_obj.set_ylabel("Sun Izo", fontsize=18)
+            plt_obj.set_xlabel("Date", fontsize=18)
+            plt_obj.set_title("Температурні умови", fontsize=18)
         elif params["exer"] == "T_val_plot":
             del df["FF"]
             del df["N"]
@@ -291,7 +291,11 @@ class StockExample(server.App):
                 q = (df['T'] == i).sum()
                 dict_val.update({i: q})
             dfc = pd.DataFrame.from_dict(dict_val, orient='index')
-            plt_obj = dfc.plot.bar(figsize=(30, 10))
+            plt_obj = dfc.plot.bar(color='green', figsize=(30, 10))
+            plt_obj.set_ylabel("t, год", fontsize=18)
+            plt_obj.set_xlabel("T, (°C)", fontsize=18)
+            plt.xticks(fontsize=18)
+            plt.yticks(fontsize=18)
         elif params["exer"] == "sun_izo":
             del df["FF"]
             del df["N"]
@@ -299,9 +303,11 @@ class StockExample(server.App):
             del df["T"]
             del df["Unnamed: 0.1"]
             plt_obj = df.plot(figsize=(30, 10))
-            plt_obj.set_ylabel("Temperature")
-            plt_obj.set_xlabel("Date")
-            plt_obj.set_title(citys)
+            plt_obj.set_ylabel("Вт/м²", fontsize=18)
+            plt_obj.set_xlabel("Date", fontsize=18)
+            plt_obj.set_title("Інтенсивність сонячної інсоляції", fontsize=18)
+            plt.xticks(rotation=45, fontsize=18)
+            plt.yticks(fontsize=18)
         elif params["exer"] == "val_wind":
             del df["T"]
             del df["N"]
@@ -314,9 +320,11 @@ class StockExample(server.App):
                 dict_val.update({i: q})
             dfc = pd.DataFrame.from_dict(dict_val, orient='index')
             plt_obj = dfc.plot.bar(figsize=(30, 10))
-            plt_obj.set_ylabel("Wind")
-            plt_obj.set_xlabel("Num")
-            plt_obj.set_title(citys)
+            plt_obj.set_ylabel("год", fontsize=18)
+            plt_obj.set_xlabel("м/с", fontsize=18)
+            plt_obj.set_title('Розподіл вітрового потенціалу за швидкостями, год', fontsize=18)
+            plt.xticks(fontsize=18)
+            plt.yticks(fontsize=18)
         elif params["exer"] == "val_sun_izo":
             arr = df["hhh"].unique()
             del df["FF"]
@@ -333,6 +341,11 @@ class StockExample(server.App):
                     dict_val.update({i: q})
             dfc = pd.DataFrame.from_dict(dict_val, orient='index')
             plt_obj = dfc.plot.bar(figsize=(30, 10))
+            plt_obj.set_xlabel("Вт/м²", fontsize=18)
+            plt_obj.set_ylabel("год", fontsize=18)
+            plt_obj.set_title("Тривалість режимів сонячної активності", fontsize=18)
+            plt.xticks(fontsize=18)
+            plt.yticks(fontsize=18)
         elif params["exer"] == "Wind":
             ws_df = df["dd"].to_numpy()
             wd_df = df["FF"].to_numpy()
@@ -340,6 +353,7 @@ class StockExample(server.App):
             wd = np.random.random(1500) * 360
             ax = WindroseAxes.from_ax()
             ax.bar(wd, ws, normed=True, opening=0.8, edgecolor='white')
+
             ax.set_legend()
             fig = ax.get_figure()
             return fig
