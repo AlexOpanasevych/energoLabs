@@ -1,3 +1,5 @@
+import sys
+
 import pandas as pd
 from windrose import WindroseAxes
 from spyre import server
@@ -133,9 +135,18 @@ class StockExample(server.App):
                   "value": '302',
                   "key": 's_six_t',
                   "action_id": "refresh",
-              }, ]
+              }, {
+                  "type": 'radiobuttons',
+                  "label": 'Function',
+                  "options": [
+                      {"label": "Sine", "value": "sin", "checked": True},
+                      {"label": "Cosine", "value": "cos"}
+                  ],
+                  "key": 'func_type',
+                  "action_id": "refresh",
+              }]
 
-    controls = [{"type": "hidden",
+    controls = [{"type": "button", "label" : "Update Data",
                  "id": "update_data"}]
 
     tabs = ["Plot", "Second",
@@ -156,37 +167,42 @@ class StockExample(server.App):
         LIST_CITY = ["львов+", "кривой_рог+", "симферополь+", "и_франк+", "донецк+", "харьков+", "днепропетровськ+",
                      "киев+", "одесса+", "луганськ+"]
         if params["exer_2"] == "2_1":
-            q = int(params["s_one"])
-            w = int(params["s_one_s"])
+            q = float(params["s_one"])
+            w = float(params["s_one_s"])
             res = q * w
             return f"<font 'text-align: center; size=20' face='Arial'>Теплотехнічних характеристик будівлі:<br>Питомі " \
-                   f"тепловтрати: {q}<br> Загальна площа: {w}<br> Результат : {res}</font> "
+                   f"тепловтрати: {q} Вт/м²<br> Загальна площа: {w} м²<br> Результат : {res}</font> "
         elif params["exer_2"] == "2_2":
             List_str = params["s_s"] + "/" + params["s_s_s"]
             List_arg = List_str.split('/')
-            List_arg = list(map(int, List_arg))
-            Q_d = List_arg[0] * List_arg[1]
-            Q_v = List_arg[3] * List_arg[4]
-            Q_td = Q_d * ((List_arg[2] - List_arg[6]) / (List_arg[7] - List_arg[6]))
-            Q_tv = Q_v * ((List_arg[5] - List_arg[6]) / (List_arg[7] - List_arg[6]))
-            Q_tgv = ((Q_td - Q_tv) / 998.23)
-            W_tgv = 1.163 * Q_tgv * (List_arg[8] - List_arg[6])
-            P_gvp = W_tgv / List_arg[9]
-            return f"<font 'text-align: center; size=20' face='Arial'>Q душ  = {Q_d}<br>Q ванн  = {Q_v}<br>Qt душ = {Q_td}<br>Qt ванн = {Q_tv}<br>Qt г.води = {Q_tgv}<br>W г.води = {W_tgv}<br>P ГВП = {P_gvp}</font>'"
+            List_arg = list(map(float, List_arg))
+            try:
+                Q_d = List_arg[0] * List_arg[1]
+                Q_v = List_arg[3] * List_arg[4]
+                Q_td = Q_d * float((List_arg[2] - List_arg[6]) / (List_arg[7] - List_arg[6]))
+                Q_tv = Q_v * float((List_arg[5] - List_arg[6]) / (List_arg[7] - List_arg[6]))
+                Q_tgv = ((Q_td - Q_tv) / 998.23)
+                W_tgv = 1.163 * Q_tgv * (List_arg[8] - List_arg[6])
+                P_gvp = W_tgv / List_arg[9]
+            except ZeroDivisionError:
+                exc_type, exc_obj, exc_tb = sys.exc_info()
+                return "<font 'text-align: center; size=20' face='Arial'>Поділено на нуль! Змініть вхідні дані! (Строка: {lineno})</font>".format(lineno=exc_tb.tb_lineno)
+            return f"<font 'text-align: center; size=20' face='Arial'>Q душ  = {Q_d} Дж/кг·К<br>Q ванн  = {Q_v} Дж/кг·К<br>Qt душ = {Q_td} л/добу<br>Qt ванн = {Q_tv} л/добу<br>Qt г.води = {Q_tgv} м³/добу<br>W г.води = {W_tgv} кВт·год<br>P ГВП = {P_gvp} кВт</font>"
         elif params["exer_2"] == "2_3":
             List_arg = params["s_s"].split('/')
-            List_arg = list(map(int, List_arg))
+            List_arg = list(map(float, List_arg))
             Q_r_tp = List_arg[0] * List_arg[1] * List_arg[2]
-            return f"<font 'text-align: center; size=20' face='Arial'>Потужність тепловтрат : {Q_r_tp}</font>"
+            return f"<font 'text-align: center; size=20' face='Arial'>Потужність тепловтрат : {Q_r_tp} кВт</font>"
         elif params["exer_2"] == "2_4":
-            return f"?"
+            return f""
         elif params["exer_2"] == "2_5":
             citys = params["city"]
             index = LIST_CITY.index(citys + "+")
             df = pd.read_csv(str(index) + ".csv", index_col=0)
-            q = (df['T'] == params["sli"]).sum()
+            df['T'] = params["sli"]
+            q = sum(df['T'])
             res = q * 18.23
-            return f"<font 'text-align: center; size=20' face='Arial'>Витрати енергії на опалення : {res}</font>"
+            return "<font 'text-align: center; size=20' face='Arial'>Витрати енергії на опалення : {res} кВт·год</font>".format(res=res)
         elif params["exer_2"] == "2_6" or params["exer_2"] == "2_7":
             citys = params["city"]
             index = LIST_CITY.index(citys + "+")
@@ -195,7 +211,7 @@ class StockExample(server.App):
             res = q * 18.23
             List_str = params["s_s"] + "/" + params["s_s_s"]
             List_arg = List_str.split('/')
-            List_arg = list(map(int, List_arg))
+            List_arg = list(map(float, List_arg))
             Q_d = List_arg[0] * List_arg[1]
             Q_v = List_arg[3] * List_arg[4]
             Q_td = Q_d * ((List_arg[2] - List_arg[6]) / (List_arg[7] - List_arg[6]))
@@ -203,7 +219,7 @@ class StockExample(server.App):
             Q_tgv = ((Q_td - Q_tv) / 998.23)
             W_tgv = 1.163 * Q_tgv * (List_arg[8] - List_arg[6])
             dict_cost = {"1": 16.784, "2": 12.76, "3": 19.20, "4": 23.20, "5": 17.74, "6": 12.80}
-            f = int(params["s_six_t"])
+            f = float(params["s_six_t"])
             key = params["s_six"]
             res_this = res * W_tgv * f * dict_cost[key]
             List_cost = []
@@ -214,33 +230,33 @@ class StockExample(server.App):
                 if key == "1":
                     return "<font 'text-align: center; size=20' face='Arial'>За відомими обсягам споживання " \
                            "розрахувати вартість опалення та ГВП будівлі для умов: теплозабезпечення від " \
-                           "централізованої мережі = {res_this}</font> "
+                           "централізованої мережі = {res_this}</font> ".format(res_this=res_this)
                 elif key == "2":
                     return "<font 'text-align: center; size=20' face='Arial'>За відомими обсягам споживання " \
                            "розрахувати вартість опалення та ГВП будівлі для умов: автономного теплозабезпечення від " \
-                           "газового котла = {res_this}</font> "
+                           "газового котла = {res_this}</font> ".format(res_this=res_this)
                 elif key == "3":
                     return "<font 'text-align: center; size=20' face='Arial'>За відомими обсягам споживання " \
                            "розрахувати вартість опалення та ГВП будівлі для умов: автономного теплозабезпечення від " \
-                           "вугільного котла = {res_this}</font> "
+                           "вугільного котла = {res_this}</font> ".format(res_this=res_this)
                 elif key == "4":
                     return "<font 'text-align: center; size=20' face='Arial'>За відомими обсягам споживання " \
                            "розрахувати вартість опалення та ГВП будівлі для умов: автономного теплозабезпечення від " \
-                           "дров’яного котла = {res_this}</font> "
+                           "дров’яного котла = {res_this}</font> ".format(res_this=res_this)
                 elif key == "5":
                     return "<font 'text-align: center; size=20' face='Arial'>За відомими обсягам споживання " \
                            "розрахувати вартість опалення та ГВП будівлі для умов: автономного теплозабезпечення від " \
-                           "котла, що працює на деревних пелетах = {res_this}</font> "
+                           "котла, що працює на деревних пелетах = {res_this}</font> ".format(res_this=res_this)
                 elif key == "6":
                     return "<font 'text-align: center; size=20' face='Arial'>За відомими обсягам споживання " \
                            "розрахувати вартість опалення та ГВП будівлі для умов: автономного теплозабезпечення від " \
-                           "електричного котла = {res_this}</font> "
-                return "<a>Error</a>"
+                           "електричного котла = {res_this}</font> ".format(res_this=res_this)
+                return "<a></a>"
 
-        return "<a>Error</a>"
+        return "<a></a>"
 
     def getPlot(self, params):
-        global plt_obj
+        plt_obj = None
         LIST_CITY = ["львов+", "кривой_рог+", "симферополь+", "и_франк+", "донецк+", "харьков+", "днепропетровськ+",
                      "киев+", "одесса+", "луганськ+"]
         citys = params["city"]
@@ -313,7 +329,7 @@ class StockExample(server.App):
                 if i == 0:
                     continue
                 else:
-                    q = (df['hhh'] == i).sum()
+                    q = sum(df["hhh"]) if df['hhh'] == i else 0
                     dict_val.update({i: q})
             dfc = pd.DataFrame.from_dict(dict_val, orient='index')
             plt_obj = dfc.plot.bar(figsize=(30, 10))
@@ -360,16 +376,18 @@ class StockExample(server.App):
                 dfc = pd.DataFrame.from_dict(dict_gr, orient='index')
                 plt_obj = dfc.plot(figsize=(30, 10), marker='.', markersize=35)
                 plt_obj.grid()
-        fig = plt_obj.get_figure()
-        return fig
+        if plt_obj is not None:
+            fig = plt_obj.get_figure()
+            return fig
+        return None
+
 
     def getCustomCSS(self):
         return ".tab-content {background:#E2E2E2;} body {background:linear-gradient(90deg, rgba(0,0,0,1) 0%, " \
                "rgba(255,255,255,1) 100%)} "
 
 
-port = 8082
+port = 8087
 if __name__ == '__main__':
     app = StockExample()
-
     app.launch(port=port)
