@@ -348,7 +348,7 @@ class StockExample(server.App):
         elif params["exer"] == "Wind":
             ws_df = df["dd"].to_numpy()
             wd_df = df["FF"].to_numpy()
-            ws = np.random.random(1500) * 6
+            ws = np.random.random(1500) * 4
             wd = np.random.random(1500) * 360
             ax = WindroseAxes.from_ax()
             ax.bar(wd, ws, normed=True, opening=0.8, edgecolor='white')

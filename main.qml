@@ -3,6 +3,7 @@ import QtQuick.Window 2.12
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.0
 import QtQuick.Dialogs 1.2
+import QtCharts 2.3
 
 Window {
     visible: true
@@ -16,72 +17,96 @@ Window {
         }
         Tab {
 
-            ColumnLayout {
-                RowLayout {
-                    height: 50
-                    Layout.fillWidth: parent.width
-                    Button {
-                        text: "add user"
-                        height: 50
-                        width : 80
-                        onClicked: {
-                            inputDialog.userIndex = userMenu.userIndex
-                            inputDialog.editMode = 1
-                            inputDialog.open()
-                        }
-                    }
-                    Item {
-                        Layout.fillWidth: true
-                    }
-                }
-
-
-
-                ListView {
-
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-
-                    model: shitModel
-
-                    spacing: 4
-
-                    delegate: Rectangle {
-                        height: 50
-                        width: parent !== null ? parent.width : 0
-                        User {
-                            name: name
-                            lastname: lastName
-                        }
-
+            TabView {
+                Tab {
+                    ColumnLayout {
                         RowLayout {
-                            anchors.fill: parent
-                            Text {
-                                Layout.fillHeight: true
-                                text: name + " " + lastName
-                                font.pixelSize: 50 / 3
+                            height: 50
+                            Layout.fillWidth: parent.width
+                            Button {
+                                text: "add user"
+                                height: 50
+                                width : 80
+                                onClicked: {
+                                    inputDialog.userIndex = userMenu.userIndex
+                                    inputDialog.editMode = 1
+                                    inputDialog.open()
+                                }
                             }
-                            // and so on
-                        }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            acceptedButtons: Qt.RightButton
-
-                            onClicked: {
-                                userMenu.userIndex = index
-                                userMenu.popup()
+                            Item {
+                                Layout.fillWidth: true
                             }
                         }
+
+
+
+                        ListView {
+
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
+
+                            model: shitModel
+
+                            spacing: 4
+
+                            delegate: Rectangle {
+                                height: 50
+                                width: parent !== null ? parent.width : 0
+                                User {
+                                    name: name
+                                    lastname: lastName
+                                }
+
+                                RowLayout {
+                                    anchors.fill: parent
+                                    Text {
+                                        Layout.fillHeight: true
+                                        text: name + " " + lastName
+                                        font.pixelSize: 50 / 3
+                                    }
+                                    // and so on
+                                }
+
+                                MouseArea {
+                                    anchors.fill: parent
+                                    acceptedButtons: Qt.RightButton
+
+                                    onClicked: {
+                                        userMenu.userIndex = index
+                                        userMenu.popup()
+                                    }
+                                }
+
+                            }
+
+
+
+                        }
+
 
                     }
 
-
-
                 }
 
+                Tab {
+                    title: "Завдання 3"
+                    ChartView {
+                        anchors.fill: parent
+                        antialiasing: true
+                        title: "графік забезпечення потреб"
+                        LineSeries {
+                            id: needsGraph
+                            XYPoint {x: 10; y: 10}
+                            XYPoint {x: 10; y: 10}
+                            XYPoint {x: 10; y: 10}
+                            XYPoint {x: 10; y: 10}
+                            XYPoint {x: 10; y: 10}
+                        }
+                    }
+                }
 
             }
+
 
         }
         Tab {}
@@ -124,9 +149,9 @@ Window {
             }
         }
         onAccepted: {
-//            for(let i = 0; i < shitModel.count; i++) {
-//                if(shitModel.get(index).name == lastInputName )
-//            }
+            //            for(let i = 0; i < shitModel.count; i++) {
+            //                if(shitModel.get(index).name == lastInputName )
+            //            }
             switch(editMode) {
             case 1:
                 shitModel.append({"name": lastInputName, "lastName": lastInputLastName})
