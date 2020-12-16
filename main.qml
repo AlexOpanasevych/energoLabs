@@ -19,7 +19,10 @@ Window {
 
             TabView {
                 Tab {
+                    title: "Завдання 1, 2"
                     ColumnLayout {
+                        anchors.topMargin: 50
+                        anchors.leftMargin: 50
                         RowLayout {
                             height: 50
                             Layout.fillWidth: parent.width
@@ -54,14 +57,14 @@ Window {
                                 width: parent !== null ? parent.width : 0
                                 User {
                                     name: name
-                                    lastname: lastName
+                                    power: power
                                 }
 
                                 RowLayout {
                                     anchors.fill: parent
                                     Text {
                                         Layout.fillHeight: true
-                                        text: name + " " + lastName
+                                        text: name + " Потужність: " + power
                                         font.pixelSize: 50 / 3
                                     }
                                     // and so on
@@ -93,16 +96,131 @@ Window {
                     ChartView {
                         anchors.fill: parent
                         antialiasing: true
-                        title: "графік забезпечення потреб"
+                        title: "Графік забезпечення потреб"
+
                         LineSeries {
                             id: needsGraph
-                            XYPoint {x: 10; y: 10}
-                            XYPoint {x: 10; y: 10}
-                            XYPoint {x: 10; y: 10}
-                            XYPoint {x: 10; y: 10}
+                            axisX: DateTimeAxis {
+                                id: dateTimeAxisX
+                                titleText: "ЧАС"
+                                titleFont.pointSize: 12
+                                format: "ddd MMMM d yy"
+                                min : new Date(2020, 12, 12)
+                                max: new Date(2020, 12, 19)
+                            }
+                            axisY: ValueAxis {
+                                id: yAxis
+                                titleText: "КІЛЬКІСТЬ ВИТРАЧЕНОЇ ЕНЕРГІЇ"
+                                titleFont.pointSize: 12
+                                min: 0
+                                max: 1000
+                            }
+                            name: "Витрачена енергія"
+                            XYPoint {x: 2; y: 10}
+                            XYPoint {x: 4; y: 10}
+                            XYPoint {x: 6; y: 10}
+                            XYPoint {x: 8; y: 10}
                             XYPoint {x: 10; y: 10}
                         }
                     }
+                }
+
+                Tab {
+                    title: "Завдання 4"
+                    ChartView {
+                        anchors.fill: parent
+                        antialiasing: true
+                        title: "Графік забезпечення потреб"
+                        LineSeries {
+                            id: genGraph
+                            axisX: DateTimeAxis {
+                                id: aX
+                                titleText: "ЧАС"
+                                titleFont.pointSize: 12
+                                format: "ddd MMMM d yyyy"
+                                min : new Date(2020, 11, 12)
+                                max: new Date(2020, 11, 19)
+                            }
+                            axisY: ValueAxis {
+                                id: aY
+                                titleText: "КІЛЬКІСТЬ ВИТРАЧЕНОЇ ЕНЕРГІЇ"
+                                titleFont.pointSize: 12
+                                min: 0
+                                max: 1000
+                            }
+                            name: "Витрачена енергія"
+//                            XYPoint {x: 2; y: 10}
+//                            XYPoint {x: 4; y: 10}
+//                            XYPoint {x: 6; y: 10}
+//                            XYPoint {x: 8; y: 10}
+//                            XYPoint {x: 10; y: 10}
+                        }
+                    }
+                }
+
+                Tab {
+                    title: "Завдання 5"
+                    Item {
+                        anchors.margins: 5
+                        ComboBox {
+                            id: userChoose
+                            model: 10
+                        }
+
+                        Loader {
+
+                            anchors.top: userChoose.bottom
+                            sourceComponent: editComponents
+                            onLoaded: {
+                                item.init(userChoose.currentText)
+                            }
+                        }
+
+                        Component {
+                            id: editComponents
+                            ColumnLayout {
+                                Label {text: "W_(спож.)"}
+                                TextField {text: "computed value"; readOnly: true}
+                                Label {text: "P_(сер.)"}
+                                TextField {readOnly: true}
+                                Label {text: "T_max"}
+                                TextField {readOnly: true}
+                                Label {text: "k_(зап.)"}
+                                TextField {readOnly: true}
+                                Label {text: "k_(вик.)"}
+                                TextField {readOnly: true}
+
+                                function init() {
+                                    // here will be db select or idk
+                                }
+                            }
+
+
+                        }
+
+                    }
+                }
+
+                Tab {
+                    title: "Завдання 6"
+                    ColumnLayout {
+                        Text {
+
+                            text: qsTr("Обсяги фінансових витрат за умови використання однозонного тарифу:")
+                        }
+                        Text {
+
+                            text: qsTr("Обсяги фінансових витрат за умови використання двозонного тарифу:")
+                        }
+                        Text {
+
+                            text: qsTr("Обсяги фінансових витрат за умови використання тризонного тарифу:")
+                        }
+                    }
+                }
+
+                Tab {
+                    title: "Завдання 7"
                 }
 
             }
@@ -118,8 +236,7 @@ Window {
         standardButtons: StandardButton.Ok | StandardButton.Cansel
         title: "Введіть дані користувача"
         property string lastInputName
-        property string lastInputLastName
-
+        property double power
         property int userIndex
 
         property int editMode
@@ -128,7 +245,7 @@ Window {
             Label {text: "Ім'я"}
             TextField {
                 validator: RegExpValidator {
-                    regExp: /[a-zA-Z]+/
+                    regExp: /[а-яА-ЯІі]+/
                 }
                 onTextChanged: {
                     if(acceptableInput) {
@@ -136,14 +253,12 @@ Window {
                     }
                 }
             }
-            Label {text: "Прізвище"}
+            Label {text: "Потужність"}
             TextField {
-                validator: RegExpValidator {
-                    regExp: /[a-zA-Z]+/
-                }
+                validator: DoubleValidator {}
                 onTextChanged: {
                     if(acceptableInput) {
-                        inputDialog.lastInputLastName = text
+                        inputDialog.power = parseFloat(text)
                     }
                 }
             }
@@ -154,11 +269,11 @@ Window {
             //            }
             switch(editMode) {
             case 1:
-                shitModel.append({"name": lastInputName, "lastName": lastInputLastName})
+                shitModel.append({"name": lastInputName, "power": power})
                 break
             case 2:
                 shitModel.get(userIndex).name = lastInputName
-                shitModel.get(userIndex).lastName = lastInputLastName
+                shitModel.get(userIndex).power = power
                 break
             }
 
