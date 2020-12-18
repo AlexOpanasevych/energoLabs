@@ -135,15 +135,6 @@ class StockExample(server.App):
                   "value": '302',
                   "key": 's_six_t',
                   "action_id": "refresh",
-              }, {
-                  "type": 'radiobuttons',
-                  "label": 'Function',
-                  "options": [
-                      {"label": "Sine", "value": "sin", "checked": True},
-                      {"label": "Cosine", "value": "cos"}
-                  ],
-                  "key": 'func_type',
-                  "action_id": "refresh",
               }]
 
     controls = [{"type": "button", "label" : "Update Data",
@@ -208,8 +199,7 @@ class StockExample(server.App):
             df = pd.read_csv(str(index) + ".csv", index_col=0)
             q = (df['T'] == params["sli"] - 30).sum()
             res = q * 18.23
-            List_str = params["s_s"] + "/" + params["s_s_s"]
-            List_arg = List_str.split('/')
+            List_arg = (params["s_s"] + "/" + params["s_s_s"]).split('/')
             List_arg = list(map(float, List_arg))
             Q_d = List_arg[0] * List_arg[1]
             Q_v = List_arg[3] * List_arg[4]
@@ -229,27 +219,27 @@ class StockExample(server.App):
                 if key == "1":
                     return "<font 'text-align: center; size=20' face='Arial'>За відомими обсягам споживання " \
                            "розрахувати вартість опалення та ГВП будівлі для умов: теплозабезпечення від " \
-                           "централізованої мережі = {res_this}</font> ".format(res_this=res_this)
+                           "централізованої мережі = {res_this:.2f} грн</font> ".format(res_this=res_this)
                 elif key == "2":
                     return "<font 'text-align: center; size=20' face='Arial'>За відомими обсягам споживання " \
                            "розрахувати вартість опалення та ГВП будівлі для умов: автономного теплозабезпечення від " \
-                           "газового котла = {res_this}</font> ".format(res_this=res_this)
+                           "газового котла = {res_this:.2f} грн</font> ".format(res_this=res_this)
                 elif key == "3":
                     return "<font 'text-align: center; size=20' face='Arial'>За відомими обсягам споживання " \
                            "розрахувати вартість опалення та ГВП будівлі для умов: автономного теплозабезпечення від " \
-                           "вугільного котла = {res_this}</font> ".format(res_this=res_this)
+                           "вугільного котла = {res_this:.2f} грн</font> ".format(res_this=res_this)
                 elif key == "4":
                     return "<font 'text-align: center; size=20' face='Arial'>За відомими обсягам споживання " \
                            "розрахувати вартість опалення та ГВП будівлі для умов: автономного теплозабезпечення від " \
-                           "дров’яного котла = {res_this}</font> ".format(res_this=res_this)
+                           "дров’яного котла = {res_this:.2f} грн</font> ".format(res_this=res_this)
                 elif key == "5":
                     return "<font 'text-align: center; size=20' face='Arial'>За відомими обсягам споживання " \
                            "розрахувати вартість опалення та ГВП будівлі для умов: автономного теплозабезпечення від " \
-                           "котла, що працює на деревних пелетах = {res_this}</font> ".format(res_this=res_this)
+                           "котла, що працює на деревних пелетах = {res_this:.2f} грн</font> ".format(res_this=res_this)
                 elif key == "6":
                     return "<font 'text-align: center; size=20' face='Arial'>За відомими обсягам споживання " \
                            "розрахувати вартість опалення та ГВП будівлі для умов: автономного теплозабезпечення від " \
-                           "електричного котла = {res_this}</font> ".format(res_this=res_this)
+                           "електричного котла = {res_this:.2f} грн</font> ".format(res_this=res_this)
                 return "<a></a>"
 
         return "<a></a>"
@@ -336,7 +326,7 @@ class StockExample(server.App):
                 if i == 0:
                     continue
                 else:
-                    q = sum(df["hhh"]) if df['hhh'] == i else 0
+                    q = (df["hhh"] == i).sum()
                     dict_val.update({i: q})
             dfc = pd.DataFrame.from_dict(dict_val, orient='index')
             plt_obj = dfc.plot.bar(figsize=(30, 10))
@@ -346,14 +336,38 @@ class StockExample(server.App):
             plt.xticks(fontsize=18)
             plt.yticks(fontsize=18)
         elif params["exer"] == "Wind":
-            ws_df = df["dd"].to_numpy()
-            wd_df = df["FF"].to_numpy()
-            ws = np.random.random(1500) * 4
-            wd = np.random.random(1500) * 360
+            dd = df["dd"].to_numpy()
+            wd = []
+            ws = df["FF"].to_numpy()
+            for i in dd:
+                if str(i) == 'Северный':
+                    wd.append(360)
+                elif str(i) == 'С-В':
+                    wd.append(45)
+                elif str(i) == 'Восточный':
+                    wd.append(90)
+                elif str(i) == 'Ю-В':
+                    wd.append(135)
+                elif str(i) == 'Южный':
+                    wd.append(180)
+                elif str(i) == 'Ю-З':
+                    wd.append(225)
+                elif str(i) == 'Западный':
+                    wd.append(270)
+                elif str(i) == 'С-З':
+                    wd.append(315)
+                elif str(i) == 'Переменный':
+                    wd.append(0)
+            wdd = np.array(wd)
+            wdd.resize(len(ws))
+            # wd.resize(len(ws))
+            # ws = np.random.random(1500) * 4
+            # wd = np.random.random(1500) * 360
             ax = WindroseAxes.from_ax()
-            ax.bar(wd, ws, normed=True, opening=0.8, edgecolor='white')
+            ax.bar(wdd, ws, normed=True, edgecolor='white', bins=np.arange(0, 4, 1))
 
             ax.set_legend()
+            ax.set_title("Троянда вітрів")
             fig = ax.get_figure()
             return fig
         elif params["exer_2"] == "2_7" or params["exer_2"] == "2_4":
@@ -400,7 +414,7 @@ class StockExample(server.App):
                "rgba(255,255,255,1) 100%)} "
 
 
-port = 8087
+port = 8090
 if __name__ == '__main__':
     app = StockExample()
     app.launch(port=port)

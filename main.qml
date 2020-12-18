@@ -14,6 +14,28 @@ Window {
     TabView {
         anchors.fill: parent
         Tab {
+            ScrollView
+            {
+                  // Same
+                clip : true
+
+                contentItem:Column {
+                    width: parent.width
+                    Repeater {
+                        model: 5;
+                        delegate: Item {
+                            width : parent.width
+
+                            Image {
+                                id: image;
+                                anchors.centerIn: parent;
+                                width: parent.width;
+                                source: "file:/C:/Users/prog5/PycharmProjects/energoLabs/images/first_lab/" + (index+1) + ".png"
+                            }
+                        }
+                    }
+                }
+            }
         }
         Tab {
 
@@ -227,7 +249,101 @@ Window {
 
 
         }
-        Tab {}
+        Tab {
+            title: "4"
+            TabView {
+                Tab {
+                    title: "Вкладка вводу"
+                    ColumnLayout {
+                        anchors.topMargin: 50
+                        anchors.leftMargin: 50
+                        RowLayout {
+                            height: 50
+                            Layout.fillWidth: parent.width
+                            Button {
+                                text: "Додати ВЕУ"
+                                height: 50
+                                width : 80
+                                onClicked: {
+                                    inputDialog.userIndex = userMenu.userIndex
+                                    inputDialog.editMode = 1
+                                    inputDialog.open()
+                                }
+                            }
+                            Item {
+                                Layout.fillWidth: true
+                            }
+                        }
+
+
+
+                        ListView {
+
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
+
+                            model: evuModel
+
+                            spacing: 4
+
+                            delegate: Rectangle {
+                                height: 50
+                                width: parent !== null ? parent.width : 0
+                                User {
+                                    name: name
+                                    power: power
+                                }
+
+                                RowLayout {
+                                    anchors.fill: parent
+                                    Text {
+                                        Layout.fillHeight: true
+                                        text: name + " Потужність: " + power
+                                        font.pixelSize: 50 / 3
+                                    }
+                                    // and so on
+                                }
+
+                                MouseArea {
+                                    anchors.fill: parent
+                                    acceptedButtons: Qt.RightButton
+
+                                    onClicked: {
+                                        userMenu.userIndex = index
+                                        userMenu.popup()
+                                    }
+                                }
+
+                            }
+
+
+
+                        }
+
+
+                    }
+                }
+
+                Tab {
+                    ColumnLayout {
+                        Label {text: "V_шукана"}
+                        TextField {readOnly: true}
+                        Label {text: "Р_ВЕУ"}
+                        TextField {readOnly: true}
+                        Label {text: "Обсяги генерування електричної енергії за " + "here will be time"}
+                        TextField {readOnly: true}
+                        Label {text: "т. СО2 екв."}
+                        TextField {readOnly: true}
+                        Label {text: "Дохід"}
+                        TextField {readOnly: true}
+                        Label {text: "Ціна на ОСВ"}
+                        TextField {readOnly: true}
+                    }
+                }
+                Tab {}
+                Tab {}
+            }
+        }
         Tab {}
     }
 
@@ -275,6 +391,13 @@ Window {
                 shitModel.get(userIndex).name = lastInputName
                 shitModel.get(userIndex).power = power
                 break
+            case 3:
+                evuModel.append({})
+                break
+            case 4:
+//                evuModel.get(userIndex).name = lastInputName
+//                shitModel.get(userIndex).power = power
+                break
             }
 
         }
@@ -304,6 +427,10 @@ Window {
 
     ListModel {
         id: shitModel
+    }
+
+    ListModel {
+        id: evuModel
     }
 
 }
