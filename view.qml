@@ -27,8 +27,8 @@ Item {
                     title: "Звіт 1"
                     ScrollView
                     {
-                        contentWidth: column.width    // The important part
-                        contentHeight: column.height  // Same
+//                        contentWidth: column.width    // The important part
+//                        contentHeight: column.height  // Same
                         clip : true
 
                         Column {
@@ -44,7 +44,7 @@ Item {
                                         anchors.centerIn: parent;
                                         width: parent.width;
                                         fillMode: Image.Stretch;
-                                        source: "images/first_lab/" + (index+1) + ".png"
+                                        source: "images/first_lab/" + (index+1) + ".jpg"
                                     }
                                 }
                             }

@@ -3,8 +3,6 @@ import sys
 import pandas as pd
 from windrose import WindroseAxes
 from spyre import server
-import json
-import datetime
 import numpy as np
 import matplotlib.pyplot as plt
 
