@@ -10,9 +10,11 @@ class Database:
         self.cursor = self.sqlite_db.cursor()
 
     def user_search(self, actor_name):
-        self.cursor.execute('SELECT * FROM user WHERE user.name LIKE \'%{}%\' AND user.lastname LIKE \'%{}%\' ORDER BY user.lastname'.format(actor_name))
+        self.cursor.execute('SELECT * FROM electricity_electricaldevices WHERE user.name LIKE \'%{}%\' AND user.lastname LIKE \'%{}%\' ORDER BY user.lastname'.format(actor_name))
         return self.cursor.fetchall()
 
     def all_users(self):
-        self.cursor.execute('SELECT * FROM user')
+        self.cursor.execute('SELECT * FROM electricity_electricaldevices')
         return self.cursor.fetchall()
+
+
