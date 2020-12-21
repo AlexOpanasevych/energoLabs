@@ -32,6 +32,18 @@ class ElecModel(QAbstractListModel):
         self._actors.append({"name" : name, "power" : power, "time_of_work": time_of_work, "quantity" : quantity, "switch_off_id": switch_off_id, "switch_on_id": switch_on_id})
         self.endInsertRows()
 
+    @pyqtSlot(int, str, float, int, int, int, int)
+    def editDevice(self, row, name, power, time_of_work, quantity, switch_off_id, switch_on_id):
+        ix = self.index(row, 0)
+        self.persons[row] = {"name" : name, "power" : power, "time_of_work": time_of_work, "quantity" : quantity, "switch_off_id": switch_off_id, "switch_on_id": switch_on_id}
+        self.dataChanged.emit(ix, ix, self.roleNames())
+
+    @pyqtSlot(int)
+    def deleteDevice(self, row):
+        self.beginRemoveColumns(QModelIndex(), row, row)
+        del self._actors[row]
+        self.endRemoveRows()
+
     # Reacts to onTextChanged event of searchBar (in QML code)
     @pyqtSlot(str)
     def search_input(self, search_input):
@@ -58,6 +70,11 @@ class ElecModel(QAbstractListModel):
 
         if role == self.SwitchOffIdRole:
             return self._actors[row]["swith_off_id"]
+
+    @pyqtSlot(int, str)
+    def getData(self, row, str):
+        return self._actors[row][str]
+
 
     def roleNames(self):
         return self._roles

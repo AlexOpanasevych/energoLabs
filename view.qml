@@ -314,6 +314,7 @@ Item {
                             spacing: 4
 
                             delegate: Rectangle {
+                                id: delegateRoot
                                 height: 50
                                 width: parent !== null ? parent.width : 0
                                 User {
@@ -338,6 +339,7 @@ Item {
                                     onClicked: {
                                         userMenu.userIndex = index
                                         userMenu.popup()
+
                                     }
                                 }
 
@@ -400,6 +402,7 @@ Item {
                 validator: RegExpValidator {
                     regExp: /[а-яА-ЯІіa-zA-Z]+/
                 }
+                text: inputDialog.lastInputName.toString()
                 onTextChanged: {
                     if(acceptableInput) {
                         inputDialog.lastInputName = text
@@ -409,6 +412,7 @@ Item {
             Label {text: "Потужність"}
             TextField {
                 validator: DoubleValidator {}
+                text: inputDialog.power.toString()
                 onTextChanged: {
                     if(acceptableInput) {
                         inputDialog.power = parseFloat(text)
@@ -419,6 +423,7 @@ Item {
             Label {text: "Час роботи"}
             TextField {
                 validator: IntValidator {bottom: 0; top: 1000}
+                text: inputDialog.time_of_work.toString()
                 onTextChanged: {
                     if(acceptableInput) {
                         inputDialog.time_of_work = parseInt(text)
@@ -429,6 +434,7 @@ Item {
             Label {text: "Кількість"}
             TextField {
                 validator: IntValidator {bottom: 0; top: 1000}
+                text: inputDialog.quantity.toString()
                 onTextChanged: {
                     if(acceptableInput) {
                         inputDialog.quantity = parseInt(text)
@@ -467,12 +473,7 @@ Item {
                                   switch_off_id, switch_on_id)
                 break
             case 2:
-                shitModel.get(userIndex).name = lastInputName
-                shitModel.get(userIndex).power = power
-                shitModel.get(userIndex).time_of_work = time_of_work
-                shitModel.get(userIndex).quantity = quantity
-                shitModel.get(userIndex).switch_off_id = switch_off_id
-                shitModel.get(userIndex).switch_on_id = switch_on_id
+                elecModel.editDevice(userIndex, lastInputName, power, time_of_work, quantity, switch_off_id, switch_on_id)
                 break
             case 3:
                 evuModel.append({})
@@ -492,14 +493,19 @@ Item {
         MenuItem {
             text: "remove user"
             onTriggered: {
-                shitModel.remove(userMenu.userIndex)
+                elecModel.deleteDevice(userMenu.userIndex)
             }
         }
         MenuItem {
             text: "update info"
             onTriggered: {
                 inputDialog.editMode = 2
+//                inputDialog.lastInputName = elecModel.data(userMenu.userIndex, "name")
+//                inputDialog.power = elecModel.data(userMenu.userIndex, "power")
+//                inputDialog.time_of_work = elecModel.data(userMenu.userIndex, "time_of_work")
+//                inputDialog.quantity = elecModel.data(userMenu.userIndex, "quantity")
                 inputDialog.open()
+
             }
         }
     }
