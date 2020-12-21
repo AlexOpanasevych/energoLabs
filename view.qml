@@ -95,7 +95,7 @@ Item {
                             Layout.fillWidth: true
                             Layout.fillHeight: true
 
-                            model: shitModel
+                            model: elecModel
 
                             spacing: 4
 
@@ -129,7 +129,9 @@ Item {
 
                             }
 
-
+                            Component.onCompleted: {
+                                console.log(elecModel.rowCount())
+                            }
 
                         }
 
@@ -460,11 +462,17 @@ Item {
             //            }
             switch(editMode) {
             case 1:
-                shitModel.append({"name": lastInputName, "power": power})
+                elecModel.addDevice(lastInputName, power,
+                                  time_of_work, quantity,
+                                  switch_off_id, switch_on_id)
                 break
             case 2:
                 shitModel.get(userIndex).name = lastInputName
                 shitModel.get(userIndex).power = power
+                shitModel.get(userIndex).time_of_work = time_of_work
+                shitModel.get(userIndex).quantity = quantity
+                shitModel.get(userIndex).switch_off_id = switch_off_id
+                shitModel.get(userIndex).switch_on_id = switch_on_id
                 break
             case 3:
                 evuModel.append({})
