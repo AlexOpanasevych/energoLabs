@@ -30,7 +30,7 @@ Window {
                                 id: image;
                                 anchors.centerIn: parent;
                                 width: parent.width;
-                                source: "file:/C:/Users/prog5/PycharmProjects/energoLabs/images/first_lab/" + (index+1) + ".png"
+                                source: "images/first_lab/" + (index+1) + ".png"
                             }
                         }
                     }

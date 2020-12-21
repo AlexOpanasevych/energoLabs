@@ -16,3 +16,5 @@ class Database:
     def all_users(self):
         self.cursor.execute('SELECT * FROM user')
         return self.cursor.fetchall()
+
+
