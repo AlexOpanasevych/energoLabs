@@ -72,8 +72,8 @@ class ElecModel(QAbstractListModel):
             return self._actors[row]["swith_off_id"]
 
     @pyqtSlot(int, str)
-    def getData(self, row, str):
-        return self._actors[row][str]
+    def getData(self, row, role):
+        return self._actors[row][role]
 
 
     def roleNames(self):
