@@ -29,9 +29,9 @@ class Database:
         return self.cursor.fetchall()
 
     def addDevice(self, name, power, time_of_work,
-                  count, switch_off_id, switch_on_id):
-        info = [name, power, count, switch_off_id, switch_on_id]
-        query = '''INSERT INTO electricity_electricaldevices (name, power, count, switch_off_id, switch_on_id) VALUES ({})'''.format(", ".join(str(item) for item in info))
+                  switch_off_id, switch_on_id):
+        info = [name, power, switch_off_id, switch_on_id]
+        query = '''INSERT INTO electricity_electricaldevices (name, power, switch_off_id, switch_on_id) VALUES ({})'''.format(", ".join(str(item) for item in info))
         print(query)
         self.cursor.execute(query)
 
