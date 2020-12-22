@@ -10,7 +10,9 @@ class Database:
         self.cursor = self.sqlite_db.cursor()
 
     def user_search(self, actor_name):
-        self.cursor.execute('SELECT * FROM electricity_electricaldevices WHERE user.name LIKE \'%{}%\' AND user.lastname LIKE \'%{}%\' ORDER BY user.lastname'.format(actor_name))
+        self.cursor.execute('''SELECT * FROM electricity_electricaldevices
+                            WHERE name LIKE \'%{}%\'
+                            ORDER BY user.name'''.format(actor_name))
         return self.cursor.fetchall()
 
     def all_users(self):
@@ -18,17 +20,20 @@ class Database:
         return self.cursor.fetchall()
 
     def getCountElectricalDevices(self):
-        self.cursor.execute('SELECT name, count FROM electricity_electricaldevices')
+        self.cursor.execute('''SELECT name, count FROM
+                            electricity_electricaldevices''')
         return self.cursor.fetchall()
 
     def getPowerElectricalDevices(self):
         self.cursor.execute('SELECT power FROM electricity_electricaldevices')
         return self.cursor.fetchall()
 
-    def addDevice(self, name, power,time_of_work, count, switch_off_id, switch_on_id):
+    def addDevice(self, name, power, time_of_work,
+                  count, switch_off_id, switch_on_id):
         info = [name, power, count, switch_off_id, switch_on_id]
-        self.cursor.execute('INSERT INTO electricity_electricaldevices (name, power, count, switch_off_id, switch_on_id)\
-        VALUES ({})'.format(", ".join(str(item) for item in info)))
+        query = '''INSERT INTO electricity_electricaldevices (name, power, count, switch_off_id, switch_on_id) VALUES ({})'''.format(", ".join(str(item) for item in info))
+        print(query)
+        self.cursor.execute(query)
 
     def removeDevice(self, id, count):
         current_count = self.cursor.execute('SELECT count FROM \
@@ -42,7 +47,8 @@ class Database:
             SET count = ?
             WHERE id = ?''', info)
 
-    def updateDevice(self, id, name, power, count, switch_off_id, switch_on_id):
+    def updateDevice(self, id, name, power,
+                     count, switch_off_id, switch_on_id):
         info = [name, power, count, switch_off_id, switch_on_id, id]
         self.cursor.execute('''UPDATE electricity_electricaldevices
         SET name = ?, power = ?, count = ?, switch_off_id = ?, switch_on_id = ?
