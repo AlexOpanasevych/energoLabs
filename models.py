@@ -30,7 +30,7 @@ class ElecModel(QAbstractListModel):
     def addDevice(self, name, power, time_of_work, quantity, switch_off_id, switch_on_id):
         self.beginInsertRows(QModelIndex(), self.rowCount(), self.rowCount())
         self._actors.append({"name": name, "power": power, "time_of_work": time_of_work, "quantity": quantity, "switch_off_id": switch_off_id, "switch_on_id": switch_on_id})
-        # self._db.addDevice(name, power, time_of_work, quantity, switch_off_id, switch_on_id)
+        self._db.addDevice(name, power, time_of_work, quantity, switch_off_id, switch_on_id)
         self.endInsertRows()
 
     @pyqtSlot(int, str, float, int, int, int, int)

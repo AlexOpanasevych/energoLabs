@@ -25,10 +25,10 @@ class Database:
         self.cursor.execute('SELECT power FROM electricity_electricaldevices')
         return self.cursor.fetchall()
 
-    def addDevice(self, name, power, count, switch_off_id, switch_on_id):
+    def addDevice(self, name, power,time_of_work, count, switch_off_id, switch_on_id):
         info = [name, power, count, switch_off_id, switch_on_id]
-        self.cursor.execute('INSERT INTO electricity_electricaldevices \
-        VALUES ()', info)
+        self.cursor.execute('INSERT INTO electricity_electricaldevices (name, power, count, switch_off_id, switch_on_id)\
+        VALUES ({})'.format(", ".join(str(item) for item in info)))
 
     def removeDevice(self, id, count):
         current_count = self.cursor.execute('SELECT count FROM \

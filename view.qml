@@ -38,7 +38,7 @@ Item {
                         Column {
                             width: parent.width
                             Repeater {
-                                model: 5;
+                                model: 14;
                                 delegate: Item {
                                     width: root.width;
                                     height: image.sourceSize.height;
