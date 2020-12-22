@@ -27,16 +27,27 @@ class ElecModel(QAbstractListModel):
         self.endResetModel()
 
     @pyqtSlot(str, float, int, int, int, int)
-    def addDevice(self, name, power, time_of_work, quantity, switch_off_id, switch_on_id):
+    def addDevice(self, name, power, time_of_work, quantity,
+                  switch_off_id, switch_on_id):
         self.beginInsertRows(QModelIndex(), self.rowCount(), self.rowCount())
-        self._actors.append({"name": name, "power": power, "time_of_work": time_of_work, "quantity": quantity, "switch_off_id": switch_off_id, "switch_on_id": switch_on_id})
-        self._db.addDevice(name, power, time_of_work, quantity, switch_off_id, switch_on_id)
+        self._actors.append({"name": name, "power": power,
+                             "time_of_work": time_of_work,
+                             "quantity": quantity,
+                             "switch_off_id": switch_off_id,
+                             "switch_on_id": switch_on_id})
+        self._db.addDevice(name, power, time_of_work, quantity, switch_off_id,
+                           switch_on_id)
         self.endInsertRows()
 
     @pyqtSlot(int, str, float, int, int, int, int)
-    def editDevice(self, row, name, power, time_of_work, quantity, switch_off_id, switch_on_id):
+    def editDevice(self, row, name, power, time_of_work,
+                   quantity, switch_off_id, switch_on_id):
         ix = self.index(row, 0)
-        self.persons[row] = {"name" : name, "power" : power, "time_of_work": time_of_work, "quantity" : quantity, "switch_off_id": switch_off_id, "switch_on_id": switch_on_id}
+        self.persons[row] = {"name": name, "power": power,
+                             "time_of_work": time_of_work,
+                             "quantity": quantity,
+                             "switch_off_id": switch_off_id,
+                             "switch_on_id": switch_on_id}
         self.dataChanged.emit(ix, ix, self.roleNames())
 
     @pyqtSlot(int)
@@ -76,11 +87,10 @@ class ElecModel(QAbstractListModel):
     def getData(self, row, role):
         return self._actors[row][role]
 
-
     def roleNames(self):
         return self._roles
 
-#class EvuModel(QAbstractListModel):
+# class EvuModel(QAbstractListModel):
 #    NameRole = Qt.UserRole + 1
 #    PowerRole = Qt.UserRole + 2
 #    TimeOfWorkRole = Qt.UserRole + 3

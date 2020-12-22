@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.14
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.15
 import QtQuick.Window 2.15
@@ -328,14 +328,14 @@ Item {
                             TableModelColumn {display: "energy"}
 
                             rows: [
-                                {velocity: 100,
-                                duration: 2,
-                                power: 13,
-                                energy: 2 * 13},
-                                {velocity: 100,
-                                duration: 2,
-                                power: 13,
-                                energy: 2 * 13}
+                                {"velocity": 100,
+                                "duration": 2,
+                                "power": 13,
+                                "energy": 2 * 13},
+                                {"velocity": 100,
+                                "duration": 2,
+                                "power": 13,
+                                "energy": 2 * 13}
 
                             ]
 
@@ -344,6 +344,12 @@ Item {
                         TableViewColumn {
                             role: "velocity"
                             title: "Швидкість вітру, м/c"
+                            delegate: Text {
+                                text: styleData.value  // accessing the property
+                            }
+                            Component.onCompleted: {
+                                console.debug(styleData.value)
+                            }
                         }
                         TableViewColumn {
                             role: "duration"
@@ -369,6 +375,7 @@ Item {
 //                            }
 //                        }
                     }
+
                 }
                 Tab {}
             }
