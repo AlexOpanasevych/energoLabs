@@ -2,10 +2,9 @@ import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.15
 import QtQuick.Window 2.15
-import QtWebEngine 1.10
-
-import QtQuick 2.12
 import QtQuick.Dialogs 1.2
+import Qt.labs.qmlmodels 1.0
+import QtWebEngine 1.10
 import QtCharts 2.3
 
 Item {
@@ -280,96 +279,97 @@ Item {
             title: "Визначення ефективності впровадження вітроенергетичної установки для потреб енергозабезпечення об’єкта"
             TabView {
                 Tab {
+                    id: inputTab
+                    property double veuHeight
+                    property double veuVelocity
+                    property double nextVeuHeight
+                    property double veuNextVelocity : veuVelocity * Math.pow((veuHeight / nextVeuHeight), 0.14)
                     title: "Вкладка вводу"
-                    ColumnLayout {
-                        anchors.topMargin: 50
-                        anchors.leftMargin: 50
-                        RowLayout {
-                            height: 50
-                            Layout.fillWidth: parent.width
-                            Button {
-                                text: "Додати ВЕУ"
-                                height: 50
-                                width : 80
-                                onClicked: {
-                                    inputDialog.userIndex = userMenu.userIndex
-                                    inputDialog.editMode = 1
-                                    inputDialog.open()
-                                }
-                            }
-                            Item {
-                                Layout.fillWidth: true
-                            }
+                    Label {text: "Висота башти ВЕУ"}
+                    TextField {
+                        validator: DoubleValidator {top: 0}
+                        onTextChanged: {
+                            if(acceptableInput)
+                                veuHeight = parseFloat(text)
                         }
-
-
-
-                        ListView {
-
-                            Layout.fillWidth: true
-                            Layout.fillHeight: true
-
-                            model: evuModel
-
-                            spacing: 4
-
-                            delegate: Rectangle {
-                                id: delegateRoot
-                                height: 50
-                                width: parent !== null ? parent.width : 0
-                                User {
-                                    name: name
-                                    power: power
-                                }
-
-                                RowLayout {
-                                    anchors.fill: parent
-                                    Text {
-                                        Layout.fillHeight: true
-                                        text: name + " Потужність: " + power
-                                        font.pixelSize: 50 / 3
-                                    }
-                                    // and so on
-                                }
-
-                                MouseArea {
-                                    anchors.fill: parent
-                                    acceptedButtons: Qt.RightButton
-
-                                    onClicked: {
-                                        userMenu.userIndex = index
-                                        userMenu.popup()
-
-                                    }
-                                }
-
-                            }
-
-
-
-                        }
-
-
                     }
                 }
 
                 Tab {
                     ColumnLayout {
-                        Label {text: "V_шукана"}
-                        TextField {readOnly: true}
-                        Label {text: "Р_ВЕУ"}
-                        TextField {readOnly: true}
-                        Label {text: "Обсяги генерування електричної енергії за " + "here will be time"}
-                        TextField {readOnly: true}
-                        Label {text: "т. СО2 екв."}
-                        TextField {readOnly: true}
-                        Label {text: "Дохід"}
-                        TextField {readOnly: true}
-                        Label {text: "Ціна на ОСВ"}
-                        TextField {readOnly: true}
+                        ColumnLayout {
+                            Label {text: "V_шукана"}
+                            TextField {readOnly: true}
+                            Label {text: "Р_ВЕУ"}
+                            TextField {readOnly: true}
+                            Label {text: "Обсяги генерування електричної енергії за " + "here will be time"}
+                            TextField {readOnly: true}
+                            Label {text: "т. СО2 екв."}
+                            TextField {readOnly: true}
+                            Label {text: "Дохід"}
+                            TextField {readOnly: true}
+                            Label {text: "Ціна на ОСВ"}
+                            TextField {readOnly: true}
+
+                        }
+
+                        Item {
+                            Layout.fillHeight: true
+                        }
                     }
                 }
-                Tab {}
+                Tab {
+                    title: "Завдання 4"
+                    TableView {
+                        model: TableModel {
+                            TableModelColumn {display: "velocity"}
+                            TableModelColumn {display: "duration"}
+                            TableModelColumn {display: "power"}
+                            TableModelColumn {display: "energy"}
+
+                            rows: [
+                                {velocity: 100,
+                                duration: 2,
+                                power: 13,
+                                energy: 2 * 13},
+                                {velocity: 100,
+                                duration: 2,
+                                power: 13,
+                                energy: 2 * 13}
+
+                            ]
+
+
+                        }
+                        TableViewColumn {
+                            role: "velocity"
+                            title: "Швидкість вітру, м/c"
+                        }
+                        TableViewColumn {
+                            role: "duration"
+                            title: "Сумарна тривалість, год"
+                        }
+                        TableViewColumn {
+                            role: "power"
+                            title: "Потужність ВЕУ, кВт"
+                        }
+                        TableViewColumn {
+                            role: "energy"
+                            title: "Енергія вироблена ВЕУ, кВт * год"
+                        }
+
+//                        itemDelegate: Rectangle {
+//                            implicitWidth: 100
+//                            implicitHeight: 50
+//                            border.width: 1
+
+//                            Text {
+//                                text: display
+//                                anchors.centerIn: parent
+//                            }
+//                        }
+                    }
+                }
                 Tab {}
             }
         }
@@ -513,13 +513,4 @@ Item {
     Dialog {
 
     }
-
-    ListModel {
-        id: shitModel
-    }
-
-    ListModel {
-        id: evuModel
-    }
-
 }
