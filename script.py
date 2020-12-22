@@ -397,7 +397,7 @@ class StockExample(server.App):
             elif params["exer_2"] == "2_4":
                 dict_gr = {}
                 for i in range(-20, 20):
-                    dict_gr.update({i: i * W_tgv})
+                    dict_gr.update({i: -i * W_tgv})
                 dfc = pd.DataFrame.from_dict(dict_gr, orient='index')
                 plt_obj = dfc.plot(figsize=(30, 10), marker='.', markersize=35)
                 plt_obj.grid()
