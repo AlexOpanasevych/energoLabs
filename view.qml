@@ -396,7 +396,6 @@ Item {
         property double power
         property double time_of_work
         property int quantity
-        property int project_id
         property int switch_off_id
         property int switch_on_id
         property int userIndex
