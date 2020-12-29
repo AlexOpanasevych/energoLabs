@@ -264,7 +264,7 @@ class StockExample(server.App):
             del df["hhh"]
             del df["Unnamed: 0.1"]
             plt_obj = df.plot(figsize=(30, 10))
-            plt_obj.set_ylabel("Sun Izo", fontsize=18)
+            plt_obj.set_ylabel("T, (°C)", fontsize=18)
             plt_obj.set_xlabel("Date", fontsize=18)
             plt_obj.set_title("Температурні умови", fontsize=18)
         elif params["exer"] == "T_val_plot":
