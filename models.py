@@ -90,6 +90,13 @@ class ElecModel(QAbstractListModel):
     def roleNames(self):
         return self._roles
 
+    # import Tabs from view.qml
+    # def createReport12(self='.doc'):
+    #     return Tabs.screencaptures(name='Аналіз метеорологічних даних регіону | Теплотехнічні характеристики будівлі, потреба у тепловій енергії на опалення, ГВП та вентилювання', do='ScrollView')
+    # def createReport3(self='.doc'):
+    #     return Tabs.screencaptures(name='Моделювання графіка електричного навантаження', do='ScrollView')
+
+
 # class EvuModel(QAbstractListModel):
 #    NameRole = Qt.UserRole + 1
 #    PowerRole = Qt.UserRole + 2

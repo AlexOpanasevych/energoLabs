@@ -50,8 +50,27 @@ Item {
                                         fillMode: Image.Stretch;
                                         source: "images/first_lab/" + (index+1) + ".jpg"
                                     }
+                                    //gmail.func(12)
                                 }
                             }
+                        }
+                    }
+                }
+                Tab {
+                    title: "Звіт 1 new"
+                    RowLayout {
+                        height: 50
+                        Layout.fillWidth: parent.width
+                        Button {
+                            text: "send"
+                            height: 50
+                            width : 80
+//                            onClicked: {
+//                                gmail.func(12);
+//                            }
+                        }
+                        Item {
+                            Layout.fillWidth: true
                         }
                     }
                 }
@@ -270,6 +289,26 @@ Item {
                 Tab {
                     title: "Завдання 7"
                 }
+
+                Tab {
+                    title: "Звіт 3"
+                    RowLayout {
+                        height: 50
+                        Layout.fillWidth: parent.width
+                        Button {
+                            text: "send"
+                            height: 50
+                            width : 80
+//                            onClicked: {
+//                                gmail.func(3);
+//                            }
+                        }
+                        Item {
+                            Layout.fillWidth: true
+                        }
+                    }
+                }
+
 
             }
 
