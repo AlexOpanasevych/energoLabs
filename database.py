@@ -20,8 +20,7 @@ class Database:
         return self.cursor.fetchall()
 
     def getCountElectricalDevices(self):
-        self.cursor.execute('''SELECT name, count FROM
-                            electricity_electricaldevices''')
+        self.cursor.execute('SELECT name, count FROM electricity_electricaldevices')
         return self.cursor.fetchall()
 
     def getPowerElectricalDevices(self):
