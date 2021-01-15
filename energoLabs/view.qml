@@ -216,6 +216,10 @@ Item {
                                 max: 1000
                             }
                             name: "Витрачена енергія"
+                            Component.onCompleted: {
+                                console.log(dg)
+                                dg.update_data(genGraph)
+                            }
 //                            XYPoint {x: 2; y: 10}
 //                            XYPoint {x: 4; y: 10}
 //                            XYPoint {x: 6; y: 10}

@@ -1,0 +1,3 @@
+{
+    "files": ["database.py","app.py","3lab.py","models.py","view.qml","script.py","data_generator.py"]
+}
