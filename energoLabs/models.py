@@ -9,6 +9,7 @@ class ElecModel(QAbstractListModel):
     QuantityRole = Qt.UserRole + 4
     SwitchOffIdRole = Qt.UserRole + 5
     SwitchOnIdRole = Qt.UserRole + 6
+    IdRole = Qt.UserRole + 7
     _roles = {NameRole: b"name", PowerRole: b"power", TimeOfWorkRole: b"time_of_work", \
     QuantityRole: b"quantity", SwitchOffIdRole: b"swith_off_id", SwitchOnIdRole: b"swith_on_id"}
 
@@ -35,7 +36,7 @@ class ElecModel(QAbstractListModel):
                              "quantity": quantity,
                              "switch_off_id": switch_off_id,
                              "switch_on_id": switch_on_id})
-        self._db.addDevice(name, power, time_of_work, quantity, switch_off_id,
+        self._db.addDevice(name, power, time_of_work, switch_off_id,
                            switch_on_id)
         self.endInsertRows()
 
@@ -43,16 +44,18 @@ class ElecModel(QAbstractListModel):
     def editDevice(self, row, name, power, time_of_work,
                    quantity, switch_off_id, switch_on_id):
         ix = self.index(row, 0)
-        self.persons[row] = {"name": name, "power": power,
+        self._actors[row] = {"id": self._actors[row]['id'], "name": name, "power": power,
                              "time_of_work": time_of_work,
                              "quantity": quantity,
                              "switch_off_id": switch_off_id,
                              "switch_on_id": switch_on_id}
+        self._db.updateDevice(self._actors[row]['id'], name, power, switch_off_id, switch_on_id)
         self.dataChanged.emit(ix, ix, self.roleNames())
 
     @pyqtSlot(int)
     def deleteDevice(self, row):
         self.beginRemoveColumns(QModelIndex(), row, row)
+        self._db.removeDevice(self._actors[row]['id'])
         del self._actors[row]
         self.endRemoveRows()
 
