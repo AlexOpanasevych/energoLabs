@@ -2,10 +2,10 @@
 #define KLIBINFO_H
 
 #include <QQmlEngine>
-#include <klibcorelite_global.h>
+//#include <klibcorelite_global.h>
 #define USE_KLIBCORE_AS_SUBPROJECT
 
-class KLIBCORELITE_EXPORT KLibInfo {
+class KLibInfo {
     static const int static_call;
 public:
     static inline const char *libname = "KLib";

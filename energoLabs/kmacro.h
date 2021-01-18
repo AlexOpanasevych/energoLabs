@@ -2,8 +2,10 @@
 //See Gist Comment for description, usage, warnings and license information
 
 //#include "kclassregistry.h"
+#include <QQmlApplicationEngine>
 #include <QDataStream>
 #include <QFile>
+#include "klibinfo.h"
 
 
 #define K_EXPAND(BLOCK) QVector<int> { 0, ((void)(BLOCK), 0) ... };

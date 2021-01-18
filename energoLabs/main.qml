@@ -229,7 +229,10 @@ Window {
                             name: "Витрачена енергія"
                             Component.onCompleted: {
                                 console.log(dg)
-                                dg.update_data(genGraph)
+                                var data = dataProvider.userGraphConsume(1)
+
+
+
                             }
                             //                            XYPoint {x: 2; y: 10}
                             //                            XYPoint {x: 4; y: 10}
@@ -273,7 +276,7 @@ Window {
                                 TextField {readOnly: true}
 
                                 function init() {
-                                    // here will be db select or idk
+
                                 }
                             }
 

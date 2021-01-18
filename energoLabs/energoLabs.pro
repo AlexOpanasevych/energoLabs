@@ -15,6 +15,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         dataprovider.cpp \
+        klibinfo.cpp \
+        kobservablelist.cpp \
         main.cpp
 
 RESOURCES += qml.qrc
@@ -38,9 +40,14 @@ INCLUDEPATH += $$PWD/../libs/database
 DEPENDPATH += $$PWD/../libs/database
 
 HEADERS += \
-    dataprovider.h
+    dataprovider.h \
+    klibinfo.h \
+    kmacro.h \
+    kobservablelist.h
 
-#win32: LIBS += -L$$PWD/../libs/klibcorelite/windows/ -lklibcorelite
+#win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../libs/klibcorelite/release/ -lklibcorelite
+#else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../libs/klibcorelite/debug/ -lklibcorelite
+#else:unix: LIBS += -L$$OUT_PWD/../libs/klibcorelite/ -lklibcorelite
 
-#INCLUDEPATH += $$PWD/../libs/klibcorelite/windows
-#DEPENDPATH += $$PWD/../libs/klibcorelite/windows
+#INCLUDEPATH += $$PWD/../libs/klibcorelite
+#DEPENDPATH += $$PWD/../libs/klibcorelite

@@ -4,7 +4,8 @@
 #include <QObject>
 #include <QAbstractItemModel>
 #include <QRegularExpression>
-#include <klibcorelite_global.h>
+#include <QHash>
+#include <QByteArray>
 class KObservableModel;
 
 template <class T>
@@ -37,7 +38,7 @@ private:
     QPair<QString, QRegularExpression> m_filterRule;
     bool filt(QVariant value);
 };
-class KLIBCORELITE_EXPORT KObservableModel : public QAbstractListModel
+class KObservableModel : public QAbstractListModel
 {
     Q_OBJECT
     template<typename> friend class KObservableList;
@@ -54,8 +55,9 @@ public:
 
         return QVariant::fromValue<QObject*>(nullptr);
     }
-
-    QHash<int, QByteArray> roleNames() const override { return {{ Qt::UserRole + 1, "object" }};}
+//static_cast<int>(Qt::UserRole) + 1
+//    QByteArray("object", 6)
+//    QHash<int, QByteArray> roleNames() const override { return QHash<int, QByteArray>().insert(1, QByteArray());}
 
 public slots:
     void updateModel() { emit modelReset({}); }

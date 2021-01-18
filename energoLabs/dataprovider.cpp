@@ -6,7 +6,8 @@
 
 DataProvider::DataProvider(QObject *parent) : QObject(parent), p("../../energoLabs/lab3.db")
 {
-    p.setTable("electrical_devices");
+    p.setTable("electricity_electricaldevices");
+//    qDebug() << p.select().get();
 }
 
 QVariantList DataProvider::thirdGraphData(int dayFirst, int daySecond)
@@ -18,9 +19,17 @@ QVariantList DataProvider::thirdGraphData(int dayFirst, int daySecond)
     for(int i = 0; i < qAbs(daySecond-dayFirst); i++) {
         QVariantMap map;
         map["x"] = QVariant(dayFirst+i);
-        map["y"] = QVariant(QRandomGenerator::global()->bounded(0, 1000));
+        map["y"] = QVariant(QRandomGenerator::global()->bounded(200, 1000));
         result.append(map);
         qDebug() << map;
     }
+    return result;
+}
+
+QList<QVariantMap> DataProvider::userGraphConsume(int userId)
+{
+    p.setTable("electricity_userdevice");
+    auto result = p.select().get();
+    qDebug() << result;
     return result;
 }
