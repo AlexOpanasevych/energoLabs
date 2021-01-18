@@ -7,12 +7,12 @@
 
 int main(int argc, char *argv[])
 {
+    qDebug() << "here crash";
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QApplication app(argc, argv);
 
     qmlRegisterType<QObject>("KLib", 1, 0, "");
-
     QProcess p;
     QObject::connect(&app, &QApplication::aboutToQuit, &p, &QProcess::kill);
     p.setProgram("python");
@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
     engine.load(url);
-    auto provider = new DataProvider;
-    engine.rootContext()->setContextProperty("dataProvider", provider);
+    //auto provider = new DataProvider;
+    //engine.rootContext()->setContextProperty("dataProvider", provider);
     return app.exec();
 }

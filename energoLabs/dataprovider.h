@@ -5,7 +5,7 @@
 #include "kmacro.h"
 #include <sqliteprovider.h>
 #include "kobservablelist.h"
-
+#include <QString>
 
 class DataProvider : public QObject
 {
@@ -21,6 +21,28 @@ public:
 public slots:
     QVariantList thirdGraphData(int dayFirst, int daySecond);
     QList<QVariantMap> userGraphConsume(int userId);
+
+    QList<QVariantMap> get_electricity_dayOfWeek();
+    QList<QVariantMap> get_electricity_electricalDevices();
+    QList<QVariantMap> get_electricity_projectZone();
+    QList<QVariantMap> get_electricity_switchType();
+    QList<QVariantMap> get_electricity_tariff();
+    QList<QVariantMap> get_electricity_tariffRange();
+    QList<QVariantMap> get_electricity_tariffZone();
+    QList<QVariantMap> get_electricity_userDevice();
+
+    bool insert_electricity_dayOfWeek(QMap<QString, QVariant> & values);
+    bool insert_electricity_electricalDevices(QMap<QString, QVariant> & values);
+    bool insert_electricity_projectZone(QMap<QString, QVariant> & values);
+    bool insert_electricity_switchType(QMap<QString, QVariant> & values);
+    bool insert_electricity_tariff(QMap<QString, QVariant> & values);
+    bool insert_electricity_tariffRange(QMap<QString, QVariant> & values);
+    bool insert_electricity_tariffZone(QMap<QString, QVariant> & values);
+    bool insert_electricity_userDevice(QMap<QString, QVariant> & values);
+
+    QList<QVariantMap> getTableInfo(QString nameTable);
+//    bool insertInfo(QString nameTable, QMap<QString, QVariant> & values);
+    bool insertInfo(const QString nameTable, const QMap<QString, QVariant> & values);
 
 signals:
 

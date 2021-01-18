@@ -23,7 +23,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectId" id="1lYsFSZ0OiQ3kzLkcGrho98QjPc" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -37,16 +37,22 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../pythonProject" />
+    <property name="last_opened_file_path" value="$USER_HOME$/CLionProjects/ProjectForMiniProgs" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunManager">
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="script" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="web_analize_data" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -95,6 +101,8 @@
       <workItem from="1609209607193" duration="2000" />
       <workItem from="1609210596821" duration="2984000" />
       <workItem from="1609216531705" duration="2530000" />
+      <workItem from="1610712811653" duration="5097000" />
+      <workItem from="1610777797956" duration="1565000" />
     </task>
     <servers />
   </component>
