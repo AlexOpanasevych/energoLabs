@@ -13,6 +13,7 @@ from numpy import arange, random
 import mplcursors
 from scipy.interpolate import splrep, splev
 from fpdf import FPDF
+from ttkthemes import ThemedStyle
 
 import progress
 
@@ -21,11 +22,6 @@ import webbrowser
 
 average_temperature = 0
 dic_1_4 = {}
-
-# s = ttk.Style()
-
-
-# s.theme_use('clam')
 
 
 def file_open():
@@ -303,7 +299,6 @@ def pandas_transforming(file_path):
     cursor = mplcursors.cursor(dynamic_lightning[1], hover=True)
     tab_holst(tab1_holst)
 
-
     for widget in tab13.winfo_children():
         widget.destroy()
     tab13.pack_forget()
@@ -462,6 +457,7 @@ def boiler_2_6(total):
     tab5_canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
     fig.savefig('lr2p3.png')
 
+
 def boiler_work():
     content = [entry_210.get(), entry_211.get(), entry_212.get(), entry_213.get(), entry_214.get(), entry_215.get(),
                entry_216.get(), entry_217.get(), entry_218.get(), entry_219.get(), entry_220.get(), entry_221.get(),
@@ -501,14 +497,12 @@ def boiler_work():
     entry_2_2.configure(state='readonly')
     entry_2_2.place(relx=0.2, rely=0.1)
 
-
     label_2_3 = Label(tab22, text='Корегування витрати гарячої води для душа:', font=('Rockwell', 10))
     label_2_3.place(relx=0.02, rely=0.18)
     entry_2_3 = Entry(tab22)
     entry_2_3.insert(0, str(round(q_dush_t)) + " л/добу")
     entry_2_3.configure(state='readonly')
     entry_2_3.place(relx=0.2, rely=0.18)
-
 
     label_2_4 = Label(tab22, text='Корегування витрати гарячої води для вани:', font=('Rockwell', 10))
     label_2_4.place(relx=0.02, rely=0.26)
@@ -517,14 +511,12 @@ def boiler_work():
     entry_2_4.configure(state='readonly')
     entry_2_4.place(relx=0.2, rely=0.26)
 
-
     label_2_5 = Label(tab22, text='Корегування витрати гарячої води всього:', font=('Rockwell', 10))
     label_2_5.place(relx=0.02, rely=0.34)
     entry_2_5 = Entry(tab22)
     entry_2_5.insert(0, str(round(abs(q_overall), 3)) + " м^3/добу")
     entry_2_5.configure(state='readonly')
     entry_2_5.place(relx=0.2, rely=0.34)
-
 
     label_2_6 = Label(tab22, text='Енергія необхідна для нагріву води:', font=('Rockwell', 10))
     label_2_6.place(relx=0.02, rely=0.42)
@@ -533,7 +525,6 @@ def boiler_work():
     entry_2_6.configure(state='readonly')
     entry_2_6.place(relx=0.2, rely=0.42)
 
-
     label_2_7 = Label(tab22, text='Необхідна теплова потужність нагрівача:', font=('Rockwell', 10))
 
     label_2_7.place(relx=0.02, rely=0.5)
@@ -541,7 +532,6 @@ def boiler_work():
     entry_2_7.insert(0, str(round(r_gvp, 3)) + " кВт")
     entry_2_7.configure(state='readonly')
     entry_2_7.place(relx=0.2, rely=0.5)
-
 
     label_2_8 = Label(tab22, text='Час нагрівання бака:', font=('Rockwell', 10))
     label_2_8.place(relx=0.02, rely=0.58)
@@ -571,7 +561,7 @@ def electrical_voltage():
         return list_val[0:]
 
     style = ttk.Style()
-    style.map('TCombobox', fieldbackground=[('readonly','white')])
+    style.map('TCombobox', fieldbackground=[('readonly', 'white')])
     style.map('TCombobox', selectbackground=[('readonly', 'white')])
     style.map('TCombobox', selectforeground=[('readonly', 'black')])
 
@@ -607,7 +597,7 @@ def electrical_voltage():
             elif option == 'ручне регулювання параметрів споживання':
                 entry_energy_passive['state'] = 'normal'
 
-        insert_vals = Tk()
+        insert_vals = Toplevel(app)
         insert_vals.title('Додавання нового пристрою')
         insert_vals.minsize(700, 350)
         insert_vals.resizable(True, True)
@@ -656,7 +646,7 @@ def electrical_voltage():
             w_custom2.current(0)
             btn_inner_add_2['state'] = 'disabled'
 
-        def check_time(what = None):
+        def check_time(what=None):
             rest = int(w_custom5.get()) - int(w_custom3.get())
             print('invoked', rest)
             if rest < 0:
@@ -683,8 +673,6 @@ def electrical_voltage():
                 btn_inner_add['state'] = 'normal'
                 return True
 
-
-
         def custom_add():
             if len(w_custom2['values']) != 0 and str(entry_31.get()) != '' and check_time():
                 if entry_31.get():
@@ -698,44 +686,44 @@ def electrical_voltage():
                             graphs_electrical_voltage['Понеділок'].append({})
                             graphs_electrical_voltage['Понеділок'][-1]['energy'] = [check_val]
                             graphs_electrical_voltage['Понеділок'][-1]['time_start'] = str(w_custom3.get()) + ":" + \
-                                                                                    str(w_custom4.get())
+                                                                                       str(w_custom4.get())
                             graphs_electrical_voltage['Понеділок'][-1]['time_end'] = str(w_custom5.get()) + ":" + \
-                                                                                  str(w_custom6.get())
+                                                                                     str(w_custom6.get())
                         elif w_custom2.get() == 'Вівторок':
                             graphs_electrical_voltage['Вівторок'].append({})
                             graphs_electrical_voltage['Вівторок'][-1]['energy'] = [check_val]
                             graphs_electrical_voltage['Вівторок'][-1]['time_start'] = str(w_custom3.get()) + ":" + \
-                                                                                     str(w_custom4.get())
+                                                                                      str(w_custom4.get())
                             graphs_electrical_voltage['Вівторок'][-1]['time_end'] = str(w_custom5.get()) + ":" + \
-                                                                                   str(w_custom6.get())
+                                                                                    str(w_custom6.get())
                         elif w_custom2.get() == 'Середа':
                             graphs_electrical_voltage['Середа'].append({})
                             graphs_electrical_voltage['Середа'][-1]['energy'] = [check_val]
                             graphs_electrical_voltage['Середа'][-1]['time_start'] = str(w_custom3.get()) + ":" + \
-                                                                                       str(w_custom4.get())
+                                                                                    str(w_custom4.get())
                             graphs_electrical_voltage['Середа'][-1]['time_end'] = str(w_custom5.get()) + ":" + \
-                                                                                     str(w_custom6.get())
+                                                                                  str(w_custom6.get())
                         elif w_custom2.get() == 'Четвер':
                             graphs_electrical_voltage['Четвер'].append({})
                             graphs_electrical_voltage['Четвер'][-1]['energy'] = [check_val]
                             graphs_electrical_voltage['Четвер'][-1]['time_start'] = str(w_custom3.get()) + ":" + \
-                                                                                      str(w_custom4.get())
+                                                                                    str(w_custom4.get())
                             graphs_electrical_voltage['Четвер'][-1]['time_end'] = str(w_custom5.get()) + ":" + \
-                                                                                    str(w_custom6.get())
+                                                                                  str(w_custom6.get())
                         elif w_custom2.get() == 'П\'ятниця':
                             graphs_electrical_voltage['П\'ятниця'].append({})
                             graphs_electrical_voltage['П\'ятниця'][-1]['energy'] = [check_val]
                             graphs_electrical_voltage['П\'ятниця'][-1]['time_start'] = str(w_custom3.get()) + ":" + \
-                                                                                    str(w_custom4.get())
+                                                                                       str(w_custom4.get())
                             graphs_electrical_voltage['П\'ятниця'][-1]['time_end'] = str(w_custom5.get()) + ":" + \
-                                                                                  str(w_custom6.get())
+                                                                                     str(w_custom6.get())
                         elif w_custom2.get() == 'Субота':
                             graphs_electrical_voltage['Субота'].append({})
                             graphs_electrical_voltage['Субота'][-1]['energy'] = [check_val]
                             graphs_electrical_voltage['Субота'][-1]['time_start'] = str(w_custom3.get()) + ":" + \
-                                                                                      str(w_custom4.get())
+                                                                                    str(w_custom4.get())
                             graphs_electrical_voltage['Субота'][-1]['time_end'] = str(w_custom5.get()) + ":" + \
-                                                                                    str(w_custom6.get())
+                                                                                  str(w_custom6.get())
                         elif w_custom2.get() == 'Неділя':
                             graphs_electrical_voltage['Неділя'].append({})
                             graphs_electrical_voltage['Неділя'][-1]['energy'] = [check_val]
@@ -773,7 +761,6 @@ def electrical_voltage():
                 # btn_inner_end['state'] = 'normal'
             next_day_check()
             # print(graphs_electrical_voltage)
-
 
         def custom_destroy():
             needed_list = all_graphs_electrical_voltage[-1]
@@ -842,11 +829,12 @@ def electrical_voltage():
         w_custom5.bind('<<ComboboxSelected>>', check_time)
         w_custom6.bind('<<ComboboxSelected>>', check_time)
 
-        def validate_positive_number(inStr : str):
+        def validate_positive_number(inStr: str):
             if (inStr.isdigit() and int(inStr) > 0) or not inStr:
                 return True
             else:
                 return False
+
         entry_energy_active = Entry(insert_vals, validate="key")
         entry_energy_active['validatecommand'] = (entry_energy_active.register(validate_positive_number), '%P')
         entry_energy_active.place(relx=0.45, rely=0.5)
@@ -879,8 +867,17 @@ def electrical_voltage():
     tabs33_inf = []
 
     def choices_build():
-        for item in tabs33_inf:
-            tab_child_3.forget(item)
+
+        def callback_f(sel):
+            print('invoked')
+            x, y, width, height = sel.artist[sel.target.index].get_bbox().bounds
+            sel.annotation.set(text=f"{x + width / 2}: {height}",
+                               position=(0, 20), anncoords="offset points")
+            sel.annotation.xy = (x + width / 2, y + height)
+
+        # for item in
+        # for item in tabs33_inf:
+        #     tab_child_3.forget(item)
 
         for item in tabs3_inf:
             tab_child_3.forget(item)
@@ -922,12 +919,14 @@ def electrical_voltage():
                     widget.destroy()
                 tabs33_inf[-1].pack_forget()
                 tab1_canvas = FigureCanvasTkAgg(fig, master=tabs33_inf[-1])  # A tk.DrawingArea.
+                cursor = mplcursors.cursor(dt, hover=True)
                 tab1_canvas.draw()
                 tab1_canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
-                # toolbar = NavigationToolbar2Tk(tab1_canvas, tabs33_inf[-1])
-                # toolbar.update()
+                toolbar = NavigationToolbar2Tk(tab1_canvas, tabs33_inf[-1])
+                toolbar.update()
                 tab1_canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
 
+                tab1_canvas.mpl_connect('add', callback_f)
 
             length = len(all_graphs_electrical_voltage)
             print(length)
@@ -955,11 +954,15 @@ def electrical_voltage():
                     widget.destroy()
                 tab3_overall.pack_forget()
                 tab1_canvas = FigureCanvasTkAgg(fig, master=tab3_overall)  # A tk.DrawingArea.
+                cursor = mplcursors.cursor(dt, hover=True)
+
                 tab1_canvas.draw()
                 tab1_canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
-                # toolbar = NavigationToolbar2Tk(tab1_canvas, tab3_overall)
-                # toolbar.update()
+                toolbar = NavigationToolbar2Tk(tab1_canvas, tab3_overall)
+                toolbar.update()
                 tab1_canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
+
+                tab1_canvas.mpl_connect('add', callback_f)
 
                 tab3_overall = ttk.Frame(tab_child_3)
                 tab_child_3.add(tab3_overall, text="По зонам")
@@ -981,11 +984,13 @@ def electrical_voltage():
                     widget.destroy()
                 tab3_overall.pack_forget()
                 tab1_canvas = FigureCanvasTkAgg(fig, master=tab3_overall)  # A tk.DrawingArea.
+                cursor = mplcursors.cursor(pickables=dt, hover=True)
                 tab1_canvas.draw()
                 tab1_canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
-                # toolbar = NavigationToolbar2Tk(tab1_canvas, tab3_overall)
-                # toolbar.update()
+                toolbar = NavigationToolbar2Tk(tab1_canvas, tab3_overall)
+                toolbar.update()
                 tab1_canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
+                tab1_canvas.mpl_connect('add', callback_f)
 
                 def form_pdf3():
                     print(tree.item(tree.focus())['values'])
@@ -1004,16 +1009,16 @@ def electrical_voltage():
                     filename = "LR3_report_" + time + ".pdf"
                     pdf.output(filename)
                     # toplevel.destroy()
+
                 # p = progress.progress(tab31, form_pdf3)
-                btn_99 = Button(tab31, text='Звіт', height=1, font=('Rockwell', 10), command=lambda: progress.progress(tab31, form_pdf3))
+                btn_99 = Button(tab31, text='Звіт', height=1, font=('Rockwell', 10),
+                                command=lambda: progress.progress(tab31, form_pdf3))
                 btn_99.place(relx=0.5, rely=0.155, anchor=CENTER)
             tabs3_inf_notes[-1].pack(expand=1, fill="both")
-
 
     btn_34 = Button(tab31, text='Розрахувати', height=1, font=('Rockwell', 10), command=choices_build, state='disabled')
 
     btn_34.place(relx=0.91, rely=0.155, anchor=CENTER)
-
 
     # create a treeview with dual scrollbars
     tree = ttk.Treeview(tab31, show="headings", height=22)
@@ -1131,7 +1136,6 @@ def veu_work():
             entry_win_3.place(relx=0.5, rely=0.5, width=80)
             button_win = Button(win2, text='Додати до бази', height=1, font=('Rockwell', 10), command=add_to_tree1)
             button_win.place(relx=0.3, rely=0.7)
-
 
     def veu_delete():
         pass
@@ -1396,7 +1400,6 @@ tab_child_2.add(tab25, text="Вартість опалення різних си
 
 default_values = file_open()
 
-
 label_210 = Label(tab21, text='Питомі тепловтрати будівлі:', font=('Rockwell', 10))
 
 label_210.place(relx=0.02, rely=0.02)
@@ -1411,7 +1414,6 @@ entry_211 = Entry(tab21)
 entry_211.insert(0, default_values[1])
 entry_211.place(relx=0.2, rely=0.1)
 
-
 label_212 = Label(tab21, text='Т-ра вхідної води:', font=('Rockwell', 10))
 
 label_212.place(relx=0.02, rely=0.18)
@@ -1419,13 +1421,11 @@ entry_212 = Entry(tab21)
 entry_212.insert(0, default_values[2])
 entry_212.place(relx=0.2, rely=0.18)
 
-
 label_213 = Label(tab21, text='Т-ра вихідної води:', font=('Rockwell', 10))
 label_213.place(relx=0.02, rely=0.26)
 entry_213 = Entry(tab21)
 entry_213.insert(0, default_values[3])
 entry_213.place(relx=0.2, rely=0.26)
-
 
 label_214 = Label(tab21, text='Т-ра води (прийом душу):', font=('Rockwell', 10))
 label_214.place(relx=0.02, rely=0.34)
@@ -1439,13 +1439,11 @@ entry_215 = Entry(tab21)
 entry_215.insert(0, default_values[5])
 entry_215.place(relx=0.2, rely=0.42)
 
-
 label_216 = Label(tab21, text='К-сть людей:', font=('Rockwell', 10))
 label_216.place(relx=0.5, rely=0.02)
 entry_216 = Entry(tab21)
 entry_216.insert(0, default_values[6])
 entry_216.place(relx=0.68, rely=0.02)
-
 
 label_217 = Label(tab21, text='К-сть витраченої води (душ):', font=('Rockwell', 10))
 label_217.place(relx=0.5, rely=0.1)
@@ -1453,13 +1451,11 @@ entry_217 = Entry(tab21)
 entry_217.insert(0, default_values[7])
 entry_217.place(relx=0.68, rely=0.1)
 
-
 label_218 = Label(tab21, text='К-сть витраченої води (ванна):', font=('Rockwell', 10))
 label_218.place(relx=0.5, rely=0.18)
 entry_218 = Entry(tab21)
 entry_218.insert(0, default_values[8])
 entry_218.place(relx=0.68, rely=0.18)
-
 
 label_219 = Label(tab21, text='К-сть прийомів ванної:', font=('Rockwell', 10))
 label_219.place(relx=0.5, rely=0.26)
@@ -1467,13 +1463,11 @@ entry_219 = Entry(tab21)
 entry_219.insert(0, default_values[9])
 entry_219.place(relx=0.68, rely=0.26)
 
-
 label_220 = Label(tab21, text='К-сть прийомів душу:', font=('Rockwell', 10))
 label_220.place(relx=0.5, rely=0.34)
 entry_220 = Entry(tab21)
 entry_220.insert(0, default_values[10])
 entry_220.place(relx=0.68, rely=0.34)
-
 
 label_221 = Label(tab21, text='Температура повітря всередині:', font=('Rockwell', 10))
 label_221.place(relx=0.5, rely=0.42)
@@ -1481,13 +1475,11 @@ entry_221 = Entry(tab21)
 entry_221.insert(0, default_values[11])
 entry_221.place(relx=0.68, rely=0.42)
 
-
 label_222 = Label(tab21, text='Тариф на теплову енергію:', font=('Rockwell', 10))
 label_222.place(relx=0.02, rely=0.5)
 entry_222 = Entry(tab21)
 entry_222.insert(0, default_values[12])
 entry_222.place(relx=0.2, rely=0.5)
-
 
 label_223 = Label(tab21, text='Тариф на електричну енергію:', font=('Rockwell', 10))
 label_223.place(relx=0.02, rely=0.58)
@@ -1495,13 +1487,11 @@ entry_223 = Entry(tab21)
 entry_223.insert(0, default_values[13])
 entry_223.place(relx=0.2, rely=0.58)
 
-
 label_224 = Label(tab21, text='Вартість 1т вугілля:', font=('Rockwell', 10))
 label_224.place(relx=0.02, rely=0.66)
 entry_224 = Entry(tab21)
 entry_224.insert(0, default_values[14])
 entry_224.place(relx=0.2, rely=0.66)
-
 
 label_225 = Label(tab21, text='Вартість 1т дров:', font=('Rockwell', 10))
 
@@ -1510,13 +1500,11 @@ entry_225 = Entry(tab21)
 entry_225.insert(0, default_values[15])
 entry_225.place(relx=0.68, rely=0.5)
 
-
 label_226 = Label(tab21, text='Вартість 1т пелет:', font=('Rockwell', 10))
 label_226.place(relx=0.5, rely=0.58)
 entry_226 = Entry(tab21)
 entry_226.insert(0, default_values[16])
 entry_226.place(relx=0.68, rely=0.58)
-
 
 label_227 = Label(tab21, text='Вартість 1м^3 газу:', font=('Rockwell', 10))
 label_227.place(relx=0.5, rely=0.66)
@@ -1532,8 +1520,8 @@ entry_w = Entry(tab21)
 entry_w.insert(0, default_values[18])
 entry_w.place(relx=0.2, rely=0.74)
 
-def form_pdf2():
 
+def form_pdf2():
     spacing = 1.2
     pdf = FPDF()
     pdf.add_page()
@@ -1580,8 +1568,8 @@ part_text = StringVar()
 part_label = Label(tab11, text='Виберiть файл *.xlsx', font=('Rockwell', 20), pady=20)
 part_label.place(relx=0.5, rely=0.4, anchor=CENTER)
 
-def form_pdf1():
 
+def form_pdf1():
     spacing = 1.2
     pdf = FPDF()
     pdf.add_page()
@@ -1600,10 +1588,13 @@ def form_pdf1():
     filename = "LR1_report_" + time + ".pdf"
     pdf.output(filename)
 
+
 import_btn = Button(tab11, text='Обрати', height=1, font=('Rockwell', 18), command=file_worker)
 import_btn.place(relx=0.4, rely=0.7, anchor=CENTER)
 # print(app.temp)
 btn_55 = Button(tab11, text='Звіт', height=1, font=('Rockwell', 18), command=form_pdf1)
 btn_55.place(relx=0.6, rely=0.7, anchor=CENTER)
+s = ThemedStyle(app)
 
+s.set_theme('black')
 app.mainloop()
