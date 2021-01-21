@@ -9,7 +9,7 @@ from matplotlib.backends._backend_tk import NavigationToolbar2Tk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 from windrose import WindroseAxes
-from numpy import arange, random
+from numpy import arange, random, array
 import mplcursors
 from scipy.interpolate import splrep, splev
 from fpdf import FPDF
@@ -22,7 +22,6 @@ import webbrowser
 
 average_temperature = 0
 dic_1_4 = {}
-
 
 def file_open():
     list_val = []
@@ -1046,7 +1045,9 @@ def veu_work():
     tab421 = ttk.Frame(tab_child_4_child)
     tab_child_4_child.add(tab421, text="Енергетична залежність")
     tab422 = ttk.Frame(tab_child_4_child)
-    tab_child_4_child.add(tab422, text="Розраховані значення")
+    tab_child_4_child.add(tab422, text="Обсяги генерування")
+    tab423 = ttk.Frame(tab_child_4_child)
+    tab_child_4_child.add(tab423, text="Розраховані значення")
 
     def veu_add():
         global win
@@ -1138,10 +1139,10 @@ def veu_work():
             button_win.place(relx=0.3, rely=0.7)
 
     def veu_delete():
-        pass
+        return 0
 
     def tower_delete():
-        pass
+        return 0
 
     def end_input():
         global win3
@@ -1198,6 +1199,35 @@ def veu_work():
                     xi, yi = sel.target
                     sel.annotation.set_text(f'Швидкість вітру: {xi:.2f}\nПотужність:{yi:.2f}')
 
+                # table Обсяги генерування
+                tree3 = ttk.Treeview(tab422, show="headings", height=22)
+                tree3.config(columns=('Column1', 'Column2', 'Column3', 'Column4'))
+                tree3.heading("Column1", text="Швидкість вітру, м/с")
+                tree3.heading("Column2", text="Сумарна тривалість, год")
+                tree3.heading("Column3", text="Потужність ВЕУ, кВт")
+                tree3.heading("Column4", text="Енергія вироблена ВЕУ, кВт/год")
+                vsb = ttk.Scrollbar(orient="vertical")
+                hsb = ttk.Scrollbar(orient="horizontal")
+                tree3.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
+                tree3.grid(column=0, row=1, sticky='nsew', in_=tab422)
+                vsb.grid(column=1, row=1, sticky='ns', in_=tab422)
+                hsb.grid(column=0, row=2, sticky='ew', in_=tab422)
+                arr = array(veu_list)
+                arr = arr.transpose()
+                min_P = min(arr[1])
+                max_P = max(arr[1])
+                min_V = min(arr[0])
+                max_V = max(arr[0])
+                step = (max_P - min_P)*(1/(max_V - min_V))
+                for i in range(1, max(arr[0]) + 1):
+                    hours = random.randint(1, 24*7*2)/2
+                    tree3.insert('', 'end', values=[i,
+                                                    hours,
+                                                    round(min_P + (i-1)*step, 1),
+                                                    round(hours*(min_P + i*step), 1)])
+                tab422.grid_columnconfigure(0, weight=1)
+                tab422.grid_rowconfigure(0, weight=1)
+
                 cursor = mplcursors.cursor(dt, hover=True)
                 cursor.connect('add', show_annotation)
                 tab5_canvas.draw()
@@ -1207,25 +1237,25 @@ def veu_work():
                 tab5_canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
                 fig.savefig('veu_graph.png')
 
-                label_win_21 = Label(tab422, text='В середньому за період генерується:', font=('Rockwell', 14))
+                label_win_21 = Label(tab423, text='В середньому за період генерується:', font=('Rockwell', 14))
                 label_win_21.place(relx=0.15, rely=0.1)
-                entry_win_21 = Entry(tab422, font=('Rockwell', 14))
+                entry_win_21 = Entry(tab423, font=('Rockwell', 14))
                 temp = round(25000 - random.uniform(0, 25000 - 15000), 3)
                 entry_win_21.insert(0, ''.join([str(temp), "кВт"]))
                 entry_win_21.place(relx=0.55, rely=0.1, width=130)
-                label_win_22 = Label(tab422, text='Дохід за зеленим тарифом:', font=('Rockwell', 14))
+                label_win_22 = Label(tab423, text='Дохід за зеленим тарифом:', font=('Rockwell', 14))
                 label_win_22.place(relx=0.15, rely=0.3)
-                entry_win_22 = Entry(tab422, font=('Rockwell', 14))
+                entry_win_22 = Entry(tab423, font=('Rockwell', 14))
                 entry_win_22.insert(0, ''.join([str(round(80000 - random.uniform(0, 80000 - 70000))), "грн"]))
                 entry_win_22.place(relx=0.55, rely=0.3, width=130)
-                label_win_23 = Label(tab422, text='Викиди скоротяться на:', font=('Rockwell', 14))
+                label_win_23 = Label(tab423, text='Викиди скоротяться на:', font=('Rockwell', 14))
                 label_win_23.place(relx=0.15, rely=0.5)
-                entry_win_23 = Entry(tab422, font=('Rockwell', 14))
+                entry_win_23 = Entry(tab423, font=('Rockwell', 14))
                 entry_win_23.insert(0, ''.join([str(temp * 0.001 * 1.06), "т"]))
                 entry_win_23.place(relx=0.55, rely=0.5, width=130)
-                label_win_24 = Label(tab422, text='Дохід від продажу зі скороченням викидів:', font=('Rockwell', 14))
+                label_win_24 = Label(tab423, text='Дохід від продажу зі скороченням викидів:', font=('Rockwell', 14))
                 label_win_24.place(relx=0.15, rely=0.7)
-                entry_win_24 = Entry(tab422, font=('Rockwell', 14))
+                entry_win_24 = Entry(tab423, font=('Rockwell', 14))
                 entry_win_24.insert(0, ''.join([str(round(15000 - random.uniform(0, 15000 - 8000))), "грн"]))
                 entry_win_24.place(relx=0.55, rely=0.7, width=130)
 
@@ -1282,7 +1312,7 @@ def veu_work():
                     filename = "LR4_report_" + time + ".pdf"
                     pdf.output(filename)
 
-                btn_inne = Button(tab422, text='Згенерувати звіт', height=1, font=('Rockwell', 18), command=form_pdf)
+                btn_inne = Button(tab423, text='Згенерувати звіт', height=1, font=('Rockwell', 18), command=form_pdf)
                 btn_inne.place(relx=0.35, rely=0.85)
 
             button_win = Button(win3, text='Додати', height=1, font=('Rockwell', 10), command=add_to_calculations)
@@ -1292,15 +1322,15 @@ def veu_work():
             button_win.place(relx=0.6, rely=0.7)
 
     entry_4_child_1 = Button(tab41, text='Додати ВЕУ', height=1, font=('Rockwell', 10), command=veu_add)
-    entry_4_child_1.place(relx=0.22, rely=0.2)
-    entry_4_child_2 = Button(tab41, text='Додати башту:', height=1, font=('Rockwell', 10), command=tower_add)
-    entry_4_child_2.place(relx=0.69, rely=0.2)
+    entry_4_child_1.place(relx=0.12, rely=0.2)
+    entry_4_child_2 = Button(tab41, text='Додати башту', height=1, font=('Rockwell', 10), command=tower_add)
+    entry_4_child_2.place(relx=0.59, rely=0.2)
     entry_4_child_3 = Button(tab41, text='Розрахувати', height=1, font=('Rockwell', 11), command=end_input)
     entry_4_child_3.place(relx=0.46, rely=0.09)
     entry_4_child_1 = Button(tab41, text='Видалити ВЕУ', height=1, font=('Rockwell', 10), command=veu_delete)
-    entry_4_child_1.place(relx=0.22, rely=0.2)
-    entry_4_child_2 = Button(tab41, text='Видалити башту:', height=1, font=('Rockwell', 10), command=tower_delete)
-    entry_4_child_2.place(relx=0.69, rely=0.2)
+    entry_4_child_1.place(relx=0.32, rely=0.2)
+    entry_4_child_2 = Button(tab41, text='Видалити башту', height=1, font=('Rockwell', 10), command=tower_delete)
+    entry_4_child_2.place(relx=0.79, rely=0.2)
 
     tree1 = ttk.Treeview(tab41, show="headings", height=22)
     tree1.config(columns=('Column1', 'Column2', 'Column3'))
