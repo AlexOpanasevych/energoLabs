@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -194,3 +195,6 @@ energoLabs.pyproject.user
 energoLabs.pyproject.user
 energoLabs.pyproject.user
 .idea/deployment.xml
+=======
+venv
+>>>>>>> origin/NewLabTest4

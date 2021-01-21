@@ -339,10 +339,17 @@ tab17 = ttk.Frame(tab_child)
 tab_child.add(tab17, text="Тривалість режимів сонячної активності", state='hidden')
 
 part_text = StringVar()
+<<<<<<< HEAD
 part_label = Label(tab11, text='Оберiть лист таблиці Excel,\n з розширення xlsx', font=('bold', 20), pady=20)
 part_label.place(relx=0.5, rely=0.4, anchor=CENTER)
 
 import_btn = Button(tab11, text='Обрати', height=1, font=('bold', 18), command=file_worker)
+=======
+part_label = Label(tab11, text='Оберiть лист таблиці Excel,\n з розширення xlsx', font=('Rockwell', 20), pady=20)
+part_label.place(relx=0.5, rely=0.4, anchor=CENTER)
+
+import_btn = Button(tab11, text='Обрати', height=1, font=('Rockwell', 18), command=file_worker)
+>>>>>>> origin/NewLabTest4
 import_btn.place(relx=0.5, rely=0.7, anchor=CENTER)
 
 

@@ -10,9 +10,15 @@ from matplotlib.figure import Figure
 from windrose import WindroseAxes
 from numpy import arange
 import mplcursors
+<<<<<<< HEAD
 
 mplcursors.cursor(hover=True)
 import webbrowser
+=======
+import webbrowser
+
+mplcursors.cursor(hover=True)
+>>>>>>> origin/NewLabTest4
 
 average_temperature = 0
 dic_1_4 = {}
@@ -464,56 +470,88 @@ def boiler_work():
         t_nagr = float(entry_w.get())
         r_gvp = w_t / t_nagr
     tab_child_2.tab(1, state='normal')
+<<<<<<< HEAD
     label_2_1 = Label(tab22, text='Обсяги споживання води на прийом душу:', font=('bold', 10))
+=======
+    label_2_1 = Label(tab22, text='Обсяги споживання води на прийом душу:', font=('Rockwell', 10))
+>>>>>>> origin/NewLabTest4
     label_2_1.place(relx=0.02, rely=0.02)
     entry_2_1 = Entry(tab22)
     entry_2_1.insert(0, q_dush)
     entry_2_1.configure(state='readonly')
     entry_2_1.place(relx=0.2, rely=0.02)
 
+<<<<<<< HEAD
     label_2_2 = Label(tab22, text='Обсяги споживання води на прийом ван:', font=('bold', 10))
+=======
+    label_2_2 = Label(tab22, text='Обсяги споживання води на прийом ван:', font=('Rockwell', 10))
+>>>>>>> origin/NewLabTest4
     label_2_2.place(relx=0.02, rely=0.1)
     entry_2_2 = Entry(tab22)
     entry_2_2.insert(0, str(q_vann))
     entry_2_2.configure(state='readonly')
     entry_2_2.place(relx=0.2, rely=0.1)
 
+<<<<<<< HEAD
     label_2_3 = Label(tab22, text='Корегування витрати гарячої води для душа:', font=('bold', 10))
+=======
+    label_2_3 = Label(tab22, text='Корегування витрати гарячої води для душа:', font=('Rockwell', 10))
+>>>>>>> origin/NewLabTest4
     label_2_3.place(relx=0.02, rely=0.18)
     entry_2_3 = Entry(tab22)
     entry_2_3.insert(0, str(round(q_dush_t)) + " л/добу")
     entry_2_3.configure(state='readonly')
     entry_2_3.place(relx=0.2, rely=0.18)
 
+<<<<<<< HEAD
     label_2_4 = Label(tab22, text='Корегування витрати гарячої води для вани:', font=('bold', 10))
+=======
+    label_2_4 = Label(tab22, text='Корегування витрати гарячої води для вани:', font=('Rockwell', 10))
+>>>>>>> origin/NewLabTest4
     label_2_4.place(relx=0.02, rely=0.26)
     entry_2_4 = Entry(tab22)
     entry_2_4.insert(0, str(round(q_vann_t)) + " л/добу")
     entry_2_4.configure(state='readonly')
     entry_2_4.place(relx=0.2, rely=0.26)
 
+<<<<<<< HEAD
     label_2_5 = Label(tab22, text='Корегування витрати гарячої води всього:', font=('bold', 10))
+=======
+    label_2_5 = Label(tab22, text='Корегування витрати гарячої води всього:', font=('Rockwell', 10))
+>>>>>>> origin/NewLabTest4
     label_2_5.place(relx=0.02, rely=0.34)
     entry_2_5 = Entry(tab22)
     entry_2_5.insert(0, str(round(q_overall, 3)) + " м^3/добу")
     entry_2_5.configure(state='readonly')
     entry_2_5.place(relx=0.2, rely=0.34)
 
+<<<<<<< HEAD
     label_2_6 = Label(tab22, text='Енергія необхідна для нагріву води:', font=('bold', 10))
+=======
+    label_2_6 = Label(tab22, text='Енергія необхідна для нагріву води:', font=('Rockwell', 10))
+>>>>>>> origin/NewLabTest4
     label_2_6.place(relx=0.02, rely=0.42)
     entry_2_6 = Entry(tab22)
     entry_2_6.insert(0, str(round(w_t, 3)) + " кВт*год")
     entry_2_6.configure(state='readonly')
     entry_2_6.place(relx=0.2, rely=0.42)
 
+<<<<<<< HEAD
     label_2_7 = Label(tab22, text='Необхідна теплова потужність нагрівача:', font=('bold', 10))
+=======
+    label_2_7 = Label(tab22, text='Необхідна теплова потужність нагрівача:', font=('Rockwell', 10))
+>>>>>>> origin/NewLabTest4
     label_2_7.place(relx=0.02, rely=0.5)
     entry_2_7 = Entry(tab22)
     entry_2_7.insert(0, str(round(r_gvp, 3)) + " кВт")
     entry_2_7.configure(state='readonly')
     entry_2_7.place(relx=0.2, rely=0.5)
 
+<<<<<<< HEAD
     label_2_8 = Label(tab22, text='Час нагрівання бака:', font=('bold', 10))
+=======
+    label_2_8 = Label(tab22, text='Час нагрівання бака:', font=('Rockwell', 10))
+>>>>>>> origin/NewLabTest4
     label_2_8.place(relx=0.02, rely=0.58)
     entry_2_8 = Entry(tab22)
     entry_2_8.insert(0, str(round(t_nagr, 3)) + " год")
@@ -525,7 +563,11 @@ def boiler_work():
     # def OpenUrl():
     #     webbrowser.open_new(url)
     #
+<<<<<<< HEAD
     # web_btn = Button(tab22, text='Знайти потрібний котел', height=1, font=('bold', 18), command=OpenUrl)
+=======
+    # web_btn = Button(tab22, text='Знайти потрібний котел', height=1, font=('Rockwell', 18), command=OpenUrl)
+>>>>>>> origin/NewLabTest4
     # web_btn.place(relx=0.15, rely=0.8, anchor=CENTER)
 
     boiler_warmity()
@@ -582,109 +624,181 @@ tab_child_2.add(tab25, text="Вартість опалення різних си
 
 default_values = file_open()
 
+<<<<<<< HEAD
 label_210 = Label(tab21, text='Питомі тепловтрати будівлі:', font=('bold', 10))
+=======
+label_210 = Label(tab21, text='Питомі тепловтрати будівлі:', font=('Rockwell', 10))
+>>>>>>> origin/NewLabTest4
 label_210.place(relx=0.02, rely=0.02)
 entry_210 = Entry(tab21)
 entry_210.insert(0, default_values[0])
 entry_210.place(relx=0.2, rely=0.02)
 
+<<<<<<< HEAD
 label_211 = Label(tab21, text='Опалювальна площа:', font=('bold', 10))
+=======
+label_211 = Label(tab21, text='Опалювальна площа:', font=('Rockwell', 10))
+>>>>>>> origin/NewLabTest4
 label_211.place(relx=0.02, rely=0.1)
 entry_211 = Entry(tab21)
 entry_211.insert(0, default_values[1])
 entry_211.place(relx=0.2, rely=0.1)
 
+<<<<<<< HEAD
 label_212 = Label(tab21, text='Т-ра вхідної води:', font=('bold', 10))
+=======
+label_212 = Label(tab21, text='Т-ра вхідної води:', font=('Rockwell', 10))
+>>>>>>> origin/NewLabTest4
 label_212.place(relx=0.02, rely=0.18)
 entry_212 = Entry(tab21)
 entry_212.insert(0, default_values[2])
 entry_212.place(relx=0.2, rely=0.18)
 
+<<<<<<< HEAD
 label_213 = Label(tab21, text='Т-ра вихідної води:', font=('bold', 10))
+=======
+label_213 = Label(tab21, text='Т-ра вихідної води:', font=('Rockwell', 10))
+>>>>>>> origin/NewLabTest4
 label_213.place(relx=0.02, rely=0.26)
 entry_213 = Entry(tab21)
 entry_213.insert(0, default_values[3])
 entry_213.place(relx=0.2, rely=0.26)
 
+<<<<<<< HEAD
 label_214 = Label(tab21, text='Т-ра води (прийом душу):', font=('bold', 10))
+=======
+label_214 = Label(tab21, text='Т-ра води (прийом душу):', font=('Rockwell', 10))
+>>>>>>> origin/NewLabTest4
 label_214.place(relx=0.02, rely=0.34)
 entry_214 = Entry(tab21)
 entry_214.insert(0, default_values[4])
 entry_214.place(relx=0.2, rely=0.34)
 
+<<<<<<< HEAD
 label_215 = Label(tab21, text='Т-ра води (прийом ванної):', font=('bold', 10))
+=======
+label_215 = Label(tab21, text='Т-ра води (прийом ванної):', font=('Rockwell', 10))
+>>>>>>> origin/NewLabTest4
 label_215.place(relx=0.02, rely=0.42)
 entry_215 = Entry(tab21)
 entry_215.insert(0, default_values[5])
 entry_215.place(relx=0.2, rely=0.42)
 
+<<<<<<< HEAD
 label_216 = Label(tab21, text='К-сть людей:', font=('bold', 10))
+=======
+label_216 = Label(tab21, text='К-сть людей:', font=('Rockwell', 10))
+>>>>>>> origin/NewLabTest4
 label_216.place(relx=0.5, rely=0.02)
 entry_216 = Entry(tab21)
 entry_216.insert(0, default_values[6])
 entry_216.place(relx=0.68, rely=0.02)
 
+<<<<<<< HEAD
 label_217 = Label(tab21, text='К-сть витраченої води (душ):', font=('bold', 10))
+=======
+label_217 = Label(tab21, text='К-сть витраченої води (душ):', font=('Rockwell', 10))
+>>>>>>> origin/NewLabTest4
 label_217.place(relx=0.5, rely=0.1)
 entry_217 = Entry(tab21)
 entry_217.insert(0, default_values[7])
 entry_217.place(relx=0.68, rely=0.1)
 
+<<<<<<< HEAD
 label_218 = Label(tab21, text='К-сть витраченої води (ванна):', font=('bold', 10))
+=======
+label_218 = Label(tab21, text='К-сть витраченої води (ванна):', font=('Rockwell', 10))
+>>>>>>> origin/NewLabTest4
 label_218.place(relx=0.5, rely=0.18)
 entry_218 = Entry(tab21)
 entry_218.insert(0, default_values[8])
 entry_218.place(relx=0.68, rely=0.18)
 
+<<<<<<< HEAD
 label_219 = Label(tab21, text='К-сть прийомів ванної:', font=('bold', 10))
+=======
+label_219 = Label(tab21, text='К-сть прийомів ванної:', font=('Rockwell', 10))
+>>>>>>> origin/NewLabTest4
 label_219.place(relx=0.5, rely=0.26)
 entry_219 = Entry(tab21)
 entry_219.insert(0, default_values[9])
 entry_219.place(relx=0.68, rely=0.26)
 
+<<<<<<< HEAD
 label_220 = Label(tab21, text='К-сть прийомів душу:', font=('bold', 10))
+=======
+label_220 = Label(tab21, text='К-сть прийомів душу:', font=('Rockwell', 10))
+>>>>>>> origin/NewLabTest4
 label_220.place(relx=0.5, rely=0.34)
 entry_220 = Entry(tab21)
 entry_220.insert(0, default_values[10])
 entry_220.place(relx=0.68, rely=0.34)
 
+<<<<<<< HEAD
 label_221 = Label(tab21, text='Температура повітря всередині:', font=('bold', 10))
+=======
+label_221 = Label(tab21, text='Температура повітря всередині:', font=('Rockwell', 10))
+>>>>>>> origin/NewLabTest4
 label_221.place(relx=0.5, rely=0.42)
 entry_221 = Entry(tab21)
 entry_221.insert(0, default_values[11])
 entry_221.place(relx=0.68, rely=0.42)
 
+<<<<<<< HEAD
 label_222 = Label(tab21, text='Тариф на теплову енергію:', font=('bold', 10))
+=======
+label_222 = Label(tab21, text='Тариф на теплову енергію:', font=('Rockwell', 10))
+>>>>>>> origin/NewLabTest4
 label_222.place(relx=0.02, rely=0.5)
 entry_222 = Entry(tab21)
 entry_222.insert(0, default_values[12])
 entry_222.place(relx=0.2, rely=0.5)
 
+<<<<<<< HEAD
 label_223 = Label(tab21, text='Тариф на електричну енергію:', font=('bold', 10))
+=======
+label_223 = Label(tab21, text='Тариф на електричну енергію:', font=('Rockwell', 10))
+>>>>>>> origin/NewLabTest4
 label_223.place(relx=0.02, rely=0.58)
 entry_223 = Entry(tab21)
 entry_223.insert(0, default_values[13])
 entry_223.place(relx=0.2, rely=0.58)
 
+<<<<<<< HEAD
 label_224 = Label(tab21, text='Вартість 1т вугілля:', font=('bold', 10))
+=======
+label_224 = Label(tab21, text='Вартість 1т вугілля:', font=('Rockwell', 10))
+>>>>>>> origin/NewLabTest4
 label_224.place(relx=0.02, rely=0.66)
 entry_224 = Entry(tab21)
 entry_224.insert(0, default_values[14])
 entry_224.place(relx=0.2, rely=0.66)
 
+<<<<<<< HEAD
 label_225 = Label(tab21, text='Вартість 1т дров:', font=('bold', 10))
+=======
+label_225 = Label(tab21, text='Вартість 1т дров:', font=('Rockwell', 10))
+>>>>>>> origin/NewLabTest4
 label_225.place(relx=0.5, rely=0.5)
 entry_225 = Entry(tab21)
 entry_225.insert(0, default_values[15])
 entry_225.place(relx=0.68, rely=0.5)
 
+<<<<<<< HEAD
 label_226 = Label(tab21, text='Вартість 1т пелет:', font=('bold', 10))
+=======
+label_226 = Label(tab21, text='Вартість 1т пелет:', font=('Rockwell', 10))
+>>>>>>> origin/NewLabTest4
 label_226.place(relx=0.5, rely=0.58)
 entry_226 = Entry(tab21)
 entry_226.insert(0, default_values[16])
 entry_226.place(relx=0.68, rely=0.58)
 
+<<<<<<< HEAD
 label_227 = Label(tab21, text='Вартість 1м^3 газу:', font=('bold', 10))
+=======
+label_227 = Label(tab21, text='Вартість 1м^3 газу:', font=('Rockwell', 10))
+>>>>>>> origin/NewLabTest4
 label_227.place(relx=0.5, rely=0.66)
 entry_227 = Entry(tab21)
 entry_227.insert(0, default_values[17])
@@ -698,6 +812,7 @@ entry_w = Entry(tab21)
 entry_w.insert(0, default_values[18])
 entry_w.place(relx=0.2, rely=0.74)
 
+<<<<<<< HEAD
 calculate_btn = Button(tab21, text='Розрахувати', height=1, font=('normal', 16), command=boiler_work)
 calculate_btn.place(relx=0.02, rely=0.9)
 save_btn = Button(tab21, text='Зберегти нові значення', height=1, font=('normal', 16), command=file_edit)
@@ -708,6 +823,18 @@ part_label = Label(tab11, text='Оберiть лист таблиці Excel,\n �
 part_label.place(relx=0.5, rely=0.4, anchor=CENTER)
 
 import_btn = Button(tab11, text='Обрати', height=1, font=('bold', 18), command=file_worker)
+=======
+calculate_btn = Button(tab21, text='Розрахувати', height=1, font=('Rockwell', 16), command=boiler_work)
+calculate_btn.place(relx=0.02, rely=0.9)
+save_btn = Button(tab21, text='Зберегти нові значення', height=1, font=('Rockwell', 16), command=file_edit)
+save_btn.place(relx=0.64, rely=0.9)
+
+part_text = StringVar()
+part_label = Label(tab11, text='Оберiть лист таблиці Excel,\n з розширення xlsx', font=('Rockwell', 20), pady=20)
+part_label.place(relx=0.5, rely=0.4, anchor=CENTER)
+
+import_btn = Button(tab11, text='Обрати', height=1, font=('Rockwell', 18), command=file_worker)
+>>>>>>> origin/NewLabTest4
 import_btn.place(relx=0.5, rely=0.7, anchor=CENTER)
 
 app.mainloop()

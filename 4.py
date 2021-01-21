@@ -199,6 +199,7 @@ def print_graph_fourth(data):
 
 def print_graph_fifth(workflow_data):
     data = pandas.read_excel("NY_1.xlsx", engine='openpyxl')
+
     x, y = [], []
     for i in range(len(data)):
         if data.loc[i][2] != 0:
@@ -283,6 +284,7 @@ def tab_holst(tab_holst):
 
 def pandas_transforming(file_path):
     data = pandas.read_excel(file_path, engine='openpyxl')
+
     year_month = file_path.split('/')[-1].split('.')[0].split('-')
     data['Число месяца'] = year_month[0] + '/' + year_month[1] + '/' + \
                            data['Число месяца'].astype(str) + '/' + data['UTC'].astype(str)
@@ -482,7 +484,8 @@ def boiler_work():
         t_nagr = float(entry_w.get())
         r_gvp = w_t / t_nagr
     tab_child_2.tab(1, state='normal')
-    label_2_1 = Label(tab22, text='Обсяги споживання води на прийом душу:', font=('bold', 10))
+
+    label_2_1 = Label(tab22, text='Обсяги споживання води на прийом душу:', font=('Rockwell', 10))
     label_2_1.place(relx=0.02, rely=0.02)
     entry_2_1 = Entry(tab22)
     entry_2_1.insert(0, q_dush)
@@ -490,48 +493,57 @@ def boiler_work():
     entry_2_1.place(relx=0.2, rely=0.02)
 
     label_2_2 = Label(tab22, text='Обсяги споживання води на прийом ван:', font=('bold', 10))
+
+    label_2_2 = Label(tab22, text='Обсяги споживання води на прийом ван:', font=('Rockwell', 10))
     label_2_2.place(relx=0.02, rely=0.1)
     entry_2_2 = Entry(tab22)
     entry_2_2.insert(0, str(q_vann))
     entry_2_2.configure(state='readonly')
     entry_2_2.place(relx=0.2, rely=0.1)
 
-    label_2_3 = Label(tab22, text='Корегування витрати гарячої води для душа:', font=('bold', 10))
+
+    label_2_3 = Label(tab22, text='Корегування витрати гарячої води для душа:', font=('Rockwell', 10))
     label_2_3.place(relx=0.02, rely=0.18)
     entry_2_3 = Entry(tab22)
     entry_2_3.insert(0, str(round(q_dush_t)) + " л/добу")
     entry_2_3.configure(state='readonly')
     entry_2_3.place(relx=0.2, rely=0.18)
 
-    label_2_4 = Label(tab22, text='Корегування витрати гарячої води для вани:', font=('bold', 10))
+
+    label_2_4 = Label(tab22, text='Корегування витрати гарячої води для вани:', font=('Rockwell', 10))
     label_2_4.place(relx=0.02, rely=0.26)
     entry_2_4 = Entry(tab22)
     entry_2_4.insert(0, str(round(q_vann_t)) + " л/добу")
     entry_2_4.configure(state='readonly')
     entry_2_4.place(relx=0.2, rely=0.26)
 
-    label_2_5 = Label(tab22, text='Корегування витрати гарячої води всього:', font=('bold', 10))
+
+    label_2_5 = Label(tab22, text='Корегування витрати гарячої води всього:', font=('Rockwell', 10))
     label_2_5.place(relx=0.02, rely=0.34)
     entry_2_5 = Entry(tab22)
     entry_2_5.insert(0, str(round(abs(q_overall), 3)) + " м^3/добу")
     entry_2_5.configure(state='readonly')
     entry_2_5.place(relx=0.2, rely=0.34)
 
-    label_2_6 = Label(tab22, text='Енергія необхідна для нагріву води:', font=('bold', 10))
+
+    label_2_6 = Label(tab22, text='Енергія необхідна для нагріву води:', font=('Rockwell', 10))
     label_2_6.place(relx=0.02, rely=0.42)
     entry_2_6 = Entry(tab22)
     entry_2_6.insert(0, str(round(w_t, 3)) + " кВт*год")
     entry_2_6.configure(state='readonly')
     entry_2_6.place(relx=0.2, rely=0.42)
 
-    label_2_7 = Label(tab22, text='Необхідна теплова потужність нагрівача:', font=('bold', 10))
+
+    label_2_7 = Label(tab22, text='Необхідна теплова потужність нагрівача:', font=('Rockwell', 10))
+
     label_2_7.place(relx=0.02, rely=0.5)
     entry_2_7 = Entry(tab22)
     entry_2_7.insert(0, str(round(r_gvp, 3)) + " кВт")
     entry_2_7.configure(state='readonly')
     entry_2_7.place(relx=0.2, rely=0.5)
 
-    label_2_8 = Label(tab22, text='Час нагрівання бака:', font=('bold', 10))
+
+    label_2_8 = Label(tab22, text='Час нагрівання бака:', font=('Rockwell', 10))
     label_2_8.place(relx=0.02, rely=0.58)
     entry_2_8 = Entry(tab22)
     entry_2_8.insert(0, str(round(t_nagr, 3)) + " год")
@@ -543,7 +555,6 @@ def boiler_work():
     # def OpenUrl():
     #     webbrowser.open_new(url)
     #
-    # web_btn = Button(tab22, text='Знайти потрібний котел', height=1, font=('bold', 18), command=OpenUrl)
     # web_btn.place(relx=0.15, rely=0.8, anchor=CENTER)
 
     boiler_warmity()
@@ -601,7 +612,7 @@ def electrical_voltage():
         insert_vals.minsize(700, 350)
         insert_vals.resizable(True, True)
 
-        label_31 = Label(insert_vals, text='Назва пристрою:', font=('bold', 10))
+        label_31 = Label(insert_vals, text='Назва пристрою:', font=('Rockwell', 10))
         label_31.place(relx=0.05, rely=0.1)
 
         # def validate_empty_name(inStr):
@@ -763,6 +774,7 @@ def electrical_voltage():
             next_day_check()
             # print(graphs_electrical_voltage)
 
+
         def custom_destroy():
             needed_list = all_graphs_electrical_voltage[-1]
             w_en, w_hours = 0, 0
@@ -780,34 +792,35 @@ def electrical_voltage():
             tree.insert('', 'end', values=(needed_list["name"], round(w_en, 3), round(w_hours, 3)))
             insert_vals.destroy()
             btn_34['state'] = 'normal'
-        btn_inner_add = Button(insert_vals, text='Додати', height=1, font=('bold', 10), command=custom_add)
+
+        btn_inner_add = Button(insert_vals, text='Додати', height=1, font=('Rockwell', 10), command=custom_add)
         btn_inner_add.place(relx=0.2, rely=0.84)
 
-        btn_inner_add_2 = Button(insert_vals, text='Наступний день', height=1, font=('bold', 10), command=next_day,
+        btn_inner_add_2 = Button(insert_vals, text='Наступний день', height=1, font=('Rockwell', 10), command=next_day,
                                  state='disabled')
         btn_inner_add_2.place(relx=0.4, rely=0.84)
 
-        btn_inner_end = Button(insert_vals, text='Завершити додання', height=1, font=('bold', 10),
+        btn_inner_end = Button(insert_vals, text='Завершити додання', height=1, font=('Rockwell', 10),
                                command=custom_destroy,
                                state='disabled')
         btn_inner_end.place(relx=0.7, rely=0.84)
 
-        label_turnon = Label(insert_vals, text='Ввімкнув:', font=('bold', 10))
+        label_turnon = Label(insert_vals, text='Ввімкнув:', font=('Rockwell', 10))
         label_turnon.place(relx=0.05, rely=0.3)
-        label_turnoff = Label(insert_vals, text='Вимкнув:', font=('bold', 10))
+        label_turnoff = Label(insert_vals, text='Вимкнув:', font=('Rockwell', 10))
         label_turnoff.place(relx=0.05, rely=0.4)
-        label_energy_active = Label(insert_vals, text='Потужність прибору (активний стан):', font=('bold', 10))
+        label_energy_active = Label(insert_vals, text='Потужність прибору (активний стан):', font=('Rockwell', 10))
         label_energy_active.place(relx=0.05, rely=0.5)
-        label_energy_passive = Label(insert_vals, text='Потужність прибору (пасивний стан):', font=('bold', 10))
+        label_energy_passive = Label(insert_vals, text='Потужність прибору (пасивний стан):', font=('Rockwell', 10))
         label_energy_passive.place(relx=0.05, rely=0.6)
 
         choices_hours = ['0', '1', '2', '3', '4', '5', '6', '7', '8',
-                         '09', '10', '11', '12', '13', '14', '15', '16', '17',
+                         '9', '10', '11', '12', '13', '14', '15', '16', '17',
                          '18', '19', '20', '21', '22', '23']
         w_custom3 = ttk.Combobox(insert_vals, values=choices_hours, state='readonly', width=2)
         w_custom3.current(0)
         w_custom3.place(relx=0.15, rely=0.3)
-        label_turnon = Label(insert_vals, text=':', font=('bold', 10))
+        label_turnon = Label(insert_vals, text=':', font=('Rockwell', 10))
         label_turnon.place(relx=0.21, rely=0.3)
         choices_mins = ['0', '5', '10', '15', '20', '25', '30', '35', '40',
                         '45', '50', '55']
@@ -818,7 +831,7 @@ def electrical_voltage():
         w_custom5 = ttk.Combobox(insert_vals, values=choices_hours, state='readonly', width=2)
         w_custom5.current(0)
         w_custom5.place(relx=0.15, rely=0.4)
-        label_turnon = Label(insert_vals, text=':', font=('bold', 10))
+        label_turnon = Label(insert_vals, text=':', font=('Rockwell', 10))
         label_turnon.place(relx=0.21, rely=0.4)
         w_custom6 = ttk.Combobox(insert_vals, values=choices_mins, width=2)
         w_custom6.current(1)
@@ -852,13 +865,13 @@ def electrical_voltage():
         for selected_item in selected_items:
             tree.delete(selected_item)
 
-    btn_31 = Button(tab31, text='Обрати', height=1, font=('bold', 10), command=choices_add)
+    btn_31 = Button(tab31, text='Вибрати', height=1, font=('Rockwell', 10), command=choices_add)
     btn_31.place(relx=0.6, rely=0.155, anchor=CENTER)
 
-    btn_32 = Button(tab31, text='Додати', height=1, font=('bold', 10), command=choices_insert)
+    btn_32 = Button(tab31, text='Додати', height=1, font=('Rockwell', 10), command=choices_insert)
     btn_32.place(relx=0.7, rely=0.155, anchor=CENTER)
 
-    btn_33 = Button(tab31, text='Видалити', height=1, font=('bold', 10), command=choices_delete)
+    btn_33 = Button(tab31, text='Видалити', height=1, font=('Rockwell', 10), command=choices_delete)
     btn_33.place(relx=0.8, rely=0.155, anchor=CENTER)
 
     tabs3_inf = []
@@ -881,6 +894,7 @@ def electrical_voltage():
             tabs3_inf.append(ttk.Frame(tab_child_3))
             tabs3_inf_notes.append(ttk.Notebook(tabs3_inf[-1]))
             tab_child_3.add(tabs3_inf[-1], text=item['name'])
+
             for week, it in zip(('Понеділок', 'Вівторок', 'Середа', 'Четвер', 'П\'ятниця', 'Субота', 'Неділя'),
                                 range(7)):
                 x, y = [], []
@@ -914,6 +928,7 @@ def electrical_voltage():
                 # toolbar.update()
                 tab1_canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
 
+
             length = len(all_graphs_electrical_voltage)
             print(length)
             if length > 1 and item == all_graphs_electrical_voltage[-1]:
@@ -923,6 +938,7 @@ def electrical_voltage():
                 fig = Figure(figsize=(12, 6), dpi=100)
                 ax = fig.add_subplot(111)
                 pandas.plotting.register_matplotlib_converters()
+
                 ax.set_title('Всi пристрої')
                 ax.set_ylabel("Електрична потужність, кВт")  # ось ординат
                 ax.grid()  # включение отображение сетки
@@ -989,12 +1005,13 @@ def electrical_voltage():
                     pdf.output(filename)
                     # toplevel.destroy()
                 # p = progress.progress(tab31, form_pdf3)
-                btn_99 = Button(tab31, text='Звіт', height=1, font=('bold', 10), command=lambda: progress.progress(tab31, form_pdf3))
+                btn_99 = Button(tab31, text='Звіт', height=1, font=('Rockwell', 10), command=lambda: progress.progress(tab31, form_pdf3))
                 btn_99.place(relx=0.5, rely=0.155, anchor=CENTER)
             tabs3_inf_notes[-1].pack(expand=1, fill="both")
 
 
-    btn_34 = Button(tab31, text='Розрахувати', height=1, font=('bold', 10), command=choices_build, state='disabled')
+    btn_34 = Button(tab31, text='Розрахувати', height=1, font=('Rockwell', 10), command=choices_build, state='disabled')
+
     btn_34.place(relx=0.91, rely=0.155, anchor=CENTER)
 
 
@@ -1051,20 +1068,23 @@ def veu_work():
             win = Toplevel()
             win.minsize(300, 200)
             win.resizable(False, False)
-            label_win_1 = Label(win, text='Назва:', font=('bold', 10))
+
+            label_win_1 = Label(win, text='Назва:', font=('Rockwell', 10))
             label_win_1.place(relx=0.15, rely=0.1)
             entry_win_1 = Entry(win)
             entry_win_1.place(relx=0.5, rely=0.1, width=100)
-            label_win_2 = Label(win, text='Тип:', font=('bold', 10))
+            label_win_2 = Label(win, text='Тип:', font=('Rockwell', 10))
+
             label_win_2.place(relx=0.15, rely=0.3)
             cb_win_2 = ttk.Combobox(win, values=['вертикальна', 'горизонтальна'], state='readonly')
             cb_win_2.current(0)
             cb_win_2.place(relx=0.5, rely=0.3, width=100)
-            label_win_3 = Label(win, text='Вартість (грн):', font=('bold', 10))
+
+            label_win_3 = Label(win, text='Вартість (грн):', font=('Rockwell', 10))
             label_win_3.place(relx=0.15, rely=0.5)
             entry_win_3 = Entry(win)
             entry_win_3.place(relx=0.5, rely=0.5, width=100)
-            button_win = Button(win, text='Додати до бази', height=1, font=('normal', 10), command=add_to_tree1)
+            button_win = Button(win, text='Додати до бази', height=1, font=('Rockwell', 10), command=add_to_tree1)
             button_win.place(relx=0.3, rely=0.7)
 
     def tower_add():
@@ -1096,20 +1116,28 @@ def veu_work():
             win2 = Toplevel()
             win2.minsize(300, 200)
             win2.resizable(False, False)
-            label_win_1 = Label(win2, text='Назва:', font=('bold', 10))
+
+            label_win_1 = Label(win2, text='Назва:', font=('Rockwell', 10))
             label_win_1.place(relx=0.15, rely=0.1)
             entry_win_1 = Entry(win2)
             entry_win_1.place(relx=0.5, rely=0.1, width=80)
-            label_win_2 = Label(win2, text='Висота:', font=('bold', 10))
+            label_win_2 = Label(win2, text='Висота:', font=('Rockwell', 10))
             label_win_2.place(relx=0.15, rely=0.3)
             entry_win_2 = Entry(win2)
             entry_win_2.place(relx=0.5, rely=0.3, width=80)
-            label_win_3 = Label(win2, text='Вартість (грн):', font=('bold', 10))
+            label_win_3 = Label(win2, text='Вартість (грн):', font=('Rockwell', 10))
             label_win_3.place(relx=0.15, rely=0.5)
             entry_win_3 = Entry(win2)
             entry_win_3.place(relx=0.5, rely=0.5, width=80)
-            button_win = Button(win2, text='Додати до бази', height=1, font=('normal', 10), command=add_to_tree1)
+            button_win = Button(win2, text='Додати до бази', height=1, font=('Rockwell', 10), command=add_to_tree1)
             button_win.place(relx=0.3, rely=0.7)
+
+
+    def veu_delete():
+        pass
+
+    def tower_delete():
+        pass
 
     def end_input():
         global win3
@@ -1117,11 +1145,12 @@ def veu_work():
             win3 = Toplevel()
             win3.minsize(300, 200)
             win3.resizable(False, False)
-            label_win_1 = Label(win3, text='Швидкість (м/с):', font=('bold', 10))
+
+            label_win_1 = Label(win3, text='Швидкість (м/с):', font=('Rockwell', 10))
             label_win_1.place(relx=0.15, rely=0.2)
             entry_win_1 = Entry(win3)
             entry_win_1.place(relx=0.55, rely=0.2, width=80)
-            label_win_2 = Label(win3, text='Потужність (кВт):', font=('bold', 10))
+            label_win_2 = Label(win3, text='Потужність (кВт):', font=('Rockwell', 10))
             label_win_2.place(relx=0.15, rely=0.5)
             entry_win_2 = Entry(win3)
             entry_win_2.place(relx=0.55, rely=0.5, width=80)
@@ -1174,25 +1203,25 @@ def veu_work():
                 tab5_canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
                 fig.savefig('veu_graph.png')
 
-                label_win_21 = Label(tab422, text='В середньому за період генерується:', font=('bold', 14))
+                label_win_21 = Label(tab422, text='В середньому за період генерується:', font=('Rockwell', 14))
                 label_win_21.place(relx=0.15, rely=0.1)
-                entry_win_21 = Entry(tab422, font=('bold', 14))
+                entry_win_21 = Entry(tab422, font=('Rockwell', 14))
                 temp = round(25000 - random.uniform(0, 25000 - 15000), 3)
                 entry_win_21.insert(0, ''.join([str(temp), "кВт"]))
                 entry_win_21.place(relx=0.55, rely=0.1, width=130)
-                label_win_22 = Label(tab422, text='Дохід за зеленим тарифом:', font=('bold', 14))
+                label_win_22 = Label(tab422, text='Дохід за зеленим тарифом:', font=('Rockwell', 14))
                 label_win_22.place(relx=0.15, rely=0.3)
-                entry_win_22 = Entry(tab422, font=('bold', 14))
+                entry_win_22 = Entry(tab422, font=('Rockwell', 14))
                 entry_win_22.insert(0, ''.join([str(round(80000 - random.uniform(0, 80000 - 70000))), "грн"]))
                 entry_win_22.place(relx=0.55, rely=0.3, width=130)
-                label_win_23 = Label(tab422, text='Викиди скоротяться на:', font=('bold', 14))
+                label_win_23 = Label(tab422, text='Викиди скоротяться на:', font=('Rockwell', 14))
                 label_win_23.place(relx=0.15, rely=0.5)
-                entry_win_23 = Entry(tab422, font=('bold', 14))
+                entry_win_23 = Entry(tab422, font=('Rockwell', 14))
                 entry_win_23.insert(0, ''.join([str(temp * 0.001 * 1.06), "т"]))
                 entry_win_23.place(relx=0.55, rely=0.5, width=130)
-                label_win_24 = Label(tab422, text='Дохід від продажу зі скороченням викидів:', font=('bold', 14))
+                label_win_24 = Label(tab422, text='Дохід від продажу зі скороченням викидів:', font=('Rockwell', 14))
                 label_win_24.place(relx=0.15, rely=0.7)
-                entry_win_24 = Entry(tab422, font=('bold', 14))
+                entry_win_24 = Entry(tab422, font=('Rockwell', 14))
                 entry_win_24.insert(0, ''.join([str(round(15000 - random.uniform(0, 15000 - 8000))), "грн"]))
                 entry_win_24.place(relx=0.55, rely=0.7, width=130)
 
@@ -1249,21 +1278,25 @@ def veu_work():
                     filename = "LR4_report_" + time + ".pdf"
                     pdf.output(filename)
 
-                btn_inne = Button(tab422, text='Згенерувати звіт', height=1, font=('bold', 18), command=form_pdf)
+                btn_inne = Button(tab422, text='Згенерувати звіт', height=1, font=('Rockwell', 18), command=form_pdf)
                 btn_inne.place(relx=0.35, rely=0.85)
 
-            button_win = Button(win3, text='Додати', height=1, font=('normal', 10), command=add_to_calculations)
+            button_win = Button(win3, text='Додати', height=1, font=('Rockwell', 10), command=add_to_calculations)
             button_win.place(relx=0.1, rely=0.7)
-            button_win = Button(win3, text='Розрахувати', height=1, font=('normal', 10), command=calculate_graphs,
+            button_win = Button(win3, text='Розрахувати', height=1, font=('Rockwell', 10), command=calculate_graphs,
                                 state='disabled')
             button_win.place(relx=0.6, rely=0.7)
 
-    entry_4_child_1 = Button(tab41, text='Додати ВЕУ', height=1, font=('normal', 10), command=veu_add)
+    entry_4_child_1 = Button(tab41, text='Додати ВЕУ', height=1, font=('Rockwell', 10), command=veu_add)
     entry_4_child_1.place(relx=0.22, rely=0.2)
-    entry_4_child_2 = Button(tab41, text='Додати башту:', height=1, font=('normal', 10), command=tower_add)
+    entry_4_child_2 = Button(tab41, text='Додати башту:', height=1, font=('Rockwell', 10), command=tower_add)
     entry_4_child_2.place(relx=0.69, rely=0.2)
-    entry_4_child_3 = Button(tab41, text='Розрахувати', height=1, font=('normal', 11), command=end_input)
+    entry_4_child_3 = Button(tab41, text='Розрахувати', height=1, font=('Rockwell', 11), command=end_input)
     entry_4_child_3.place(relx=0.46, rely=0.09)
+    entry_4_child_1 = Button(tab41, text='Видалити ВЕУ', height=1, font=('Rockwell', 10), command=veu_delete)
+    entry_4_child_1.place(relx=0.22, rely=0.2)
+    entry_4_child_2 = Button(tab41, text='Видалити башту:', height=1, font=('Rockwell', 10), command=tower_delete)
+    entry_4_child_2.place(relx=0.69, rely=0.2)
 
     tree1 = ttk.Treeview(tab41, show="headings", height=22)
     tree1.config(columns=('Column1', 'Column2', 'Column3'))
@@ -1363,109 +1396,129 @@ tab_child_2.add(tab25, text="Вартість опалення різних си
 
 default_values = file_open()
 
-label_210 = Label(tab21, text='Питомі тепловтрати будівлі:', font=('bold', 10))
+
+label_210 = Label(tab21, text='Питомі тепловтрати будівлі:', font=('Rockwell', 10))
+
 label_210.place(relx=0.02, rely=0.02)
 entry_210 = Entry(tab21)
 entry_210.insert(0, default_values[0])
 entry_210.place(relx=0.2, rely=0.02)
 
-label_211 = Label(tab21, text='Опалювальна площа:', font=('bold', 10))
+label_211 = Label(tab21, text='Опалювальна площа:', font=('Rockwell', 10))
+
 label_211.place(relx=0.02, rely=0.1)
 entry_211 = Entry(tab21)
 entry_211.insert(0, default_values[1])
 entry_211.place(relx=0.2, rely=0.1)
 
-label_212 = Label(tab21, text='Т-ра вхідної води:', font=('bold', 10))
+
+label_212 = Label(tab21, text='Т-ра вхідної води:', font=('Rockwell', 10))
+
 label_212.place(relx=0.02, rely=0.18)
 entry_212 = Entry(tab21)
 entry_212.insert(0, default_values[2])
 entry_212.place(relx=0.2, rely=0.18)
 
-label_213 = Label(tab21, text='Т-ра вихідної води:', font=('bold', 10))
+
+label_213 = Label(tab21, text='Т-ра вихідної води:', font=('Rockwell', 10))
 label_213.place(relx=0.02, rely=0.26)
 entry_213 = Entry(tab21)
 entry_213.insert(0, default_values[3])
 entry_213.place(relx=0.2, rely=0.26)
 
-label_214 = Label(tab21, text='Т-ра води (прийом душу):', font=('bold', 10))
+
+label_214 = Label(tab21, text='Т-ра води (прийом душу):', font=('Rockwell', 10))
 label_214.place(relx=0.02, rely=0.34)
 entry_214 = Entry(tab21)
 entry_214.insert(0, default_values[4])
 entry_214.place(relx=0.2, rely=0.34)
 
-label_215 = Label(tab21, text='Т-ра води (прийом ванної):', font=('bold', 10))
+label_215 = Label(tab21, text='Т-ра води (прийом ванної):', font=('Rockwell', 10))
 label_215.place(relx=0.02, rely=0.42)
 entry_215 = Entry(tab21)
 entry_215.insert(0, default_values[5])
 entry_215.place(relx=0.2, rely=0.42)
 
-label_216 = Label(tab21, text='К-сть людей:', font=('bold', 10))
+
+label_216 = Label(tab21, text='К-сть людей:', font=('Rockwell', 10))
 label_216.place(relx=0.5, rely=0.02)
 entry_216 = Entry(tab21)
 entry_216.insert(0, default_values[6])
 entry_216.place(relx=0.68, rely=0.02)
 
-label_217 = Label(tab21, text='К-сть витраченої води (душ):', font=('bold', 10))
+
+label_217 = Label(tab21, text='К-сть витраченої води (душ):', font=('Rockwell', 10))
 label_217.place(relx=0.5, rely=0.1)
 entry_217 = Entry(tab21)
 entry_217.insert(0, default_values[7])
 entry_217.place(relx=0.68, rely=0.1)
 
-label_218 = Label(tab21, text='К-сть витраченої води (ванна):', font=('bold', 10))
+
+label_218 = Label(tab21, text='К-сть витраченої води (ванна):', font=('Rockwell', 10))
 label_218.place(relx=0.5, rely=0.18)
 entry_218 = Entry(tab21)
 entry_218.insert(0, default_values[8])
 entry_218.place(relx=0.68, rely=0.18)
 
-label_219 = Label(tab21, text='К-сть прийомів ванної:', font=('bold', 10))
+
+label_219 = Label(tab21, text='К-сть прийомів ванної:', font=('Rockwell', 10))
 label_219.place(relx=0.5, rely=0.26)
 entry_219 = Entry(tab21)
 entry_219.insert(0, default_values[9])
 entry_219.place(relx=0.68, rely=0.26)
 
-label_220 = Label(tab21, text='К-сть прийомів душу:', font=('bold', 10))
+
+label_220 = Label(tab21, text='К-сть прийомів душу:', font=('Rockwell', 10))
 label_220.place(relx=0.5, rely=0.34)
 entry_220 = Entry(tab21)
 entry_220.insert(0, default_values[10])
 entry_220.place(relx=0.68, rely=0.34)
 
-label_221 = Label(tab21, text='Температура повітря всередині:', font=('bold', 10))
+
+label_221 = Label(tab21, text='Температура повітря всередині:', font=('Rockwell', 10))
 label_221.place(relx=0.5, rely=0.42)
 entry_221 = Entry(tab21)
 entry_221.insert(0, default_values[11])
 entry_221.place(relx=0.68, rely=0.42)
 
-label_222 = Label(tab21, text='Тариф на теплову енергію:', font=('bold', 10))
+
+label_222 = Label(tab21, text='Тариф на теплову енергію:', font=('Rockwell', 10))
 label_222.place(relx=0.02, rely=0.5)
 entry_222 = Entry(tab21)
 entry_222.insert(0, default_values[12])
 entry_222.place(relx=0.2, rely=0.5)
 
-label_223 = Label(tab21, text='Тариф на електричну енергію:', font=('bold', 10))
+
+label_223 = Label(tab21, text='Тариф на електричну енергію:', font=('Rockwell', 10))
 label_223.place(relx=0.02, rely=0.58)
 entry_223 = Entry(tab21)
 entry_223.insert(0, default_values[13])
 entry_223.place(relx=0.2, rely=0.58)
 
-label_224 = Label(tab21, text='Вартість 1т вугілля:', font=('bold', 10))
+
+label_224 = Label(tab21, text='Вартість 1т вугілля:', font=('Rockwell', 10))
 label_224.place(relx=0.02, rely=0.66)
 entry_224 = Entry(tab21)
 entry_224.insert(0, default_values[14])
 entry_224.place(relx=0.2, rely=0.66)
 
-label_225 = Label(tab21, text='Вартість 1т дров:', font=('bold', 10))
+
+label_225 = Label(tab21, text='Вартість 1т дров:', font=('Rockwell', 10))
+
 label_225.place(relx=0.5, rely=0.5)
 entry_225 = Entry(tab21)
 entry_225.insert(0, default_values[15])
 entry_225.place(relx=0.68, rely=0.5)
 
-label_226 = Label(tab21, text='Вартість 1т пелет:', font=('bold', 10))
+
+label_226 = Label(tab21, text='Вартість 1т пелет:', font=('Rockwell', 10))
 label_226.place(relx=0.5, rely=0.58)
 entry_226 = Entry(tab21)
 entry_226.insert(0, default_values[16])
 entry_226.place(relx=0.68, rely=0.58)
 
-label_227 = Label(tab21, text='Вартість 1м^3 газу:', font=('bold', 10))
+
+label_227 = Label(tab21, text='Вартість 1м^3 газу:', font=('Rockwell', 10))
 label_227.place(relx=0.5, rely=0.66)
 entry_227 = Entry(tab21)
 entry_227.insert(0, default_values[17])
@@ -1496,11 +1549,12 @@ def form_pdf2():
     filename = "LR2_report_" + time + ".pdf"
     pdf.output(filename)
 
-calculate_btn = Button(tab21, text='Розрахувати', height=1, font=('normal', 14), command=boiler_work)
+
+calculate_btn = Button(tab21, text='Розрахувати', height=1, font=('Rockwell', 14), command=boiler_work)
 calculate_btn.place(relx=0.015, rely=0.9)
-save_btn = Button(tab21, text='Звіт', height=1, font=('normal', 14), command=form_pdf2)
+save_btn = Button(tab21, text='Звіт', height=1, font=('Rockwell', 14), command=form_pdf2)
 save_btn.place(relx=0.4, rely=0.9)
-save_btn = Button(tab21, text='Зберегти нові значення', height=1, font=('normal', 14), command=file_edit)
+save_btn = Button(tab21, text='Зберегти нові значення', height=1, font=('Rockwell', 14), command=file_edit)
 save_btn.place(relx=0.64, rely=0.9)
 
 tab_child_3 = ttk.Notebook(tab3)
@@ -1522,7 +1576,8 @@ tab_child_4.add(tab42, text="Розрахунок", state='disable')
 veu_work()
 
 part_text = StringVar()
-part_label = Label(tab11, text='Виберiть файл *.xlsx', font=('bold', 20), pady=20)
+
+part_label = Label(tab11, text='Виберiть файл *.xlsx', font=('Rockwell', 20), pady=20)
 part_label.place(relx=0.5, rely=0.4, anchor=CENTER)
 
 def form_pdf1():
@@ -1545,10 +1600,10 @@ def form_pdf1():
     filename = "LR1_report_" + time + ".pdf"
     pdf.output(filename)
 
-import_btn = Button(tab11, text='Обрати', height=1, font=('bold', 18), command=file_worker)
+import_btn = Button(tab11, text='Обрати', height=1, font=('Rockwell', 18), command=file_worker)
 import_btn.place(relx=0.4, rely=0.7, anchor=CENTER)
 # print(app.temp)
-btn_55 = Button(tab11, text='Звіт', height=1, font=('bold', 18), command=form_pdf1)
+btn_55 = Button(tab11, text='Звіт', height=1, font=('Rockwell', 18), command=form_pdf1)
 btn_55.place(relx=0.6, rely=0.7, anchor=CENTER)
 
 app.mainloop()
