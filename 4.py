@@ -1022,7 +1022,7 @@ def electrical_voltage():
                 # p = progress.progress(tab31, form_pdf3)
                 btn_99 = Button(tab31, text='Звіт', height=1, font=('Rockwell', 10),
                                 command=lambda: progress.progress(tab31, form_pdf3))
-                btn_99.place(relx=0.5, rely=0.155, anchor=CENTER)
+                btn_99.place(relx=0.42, rely=0.155, anchor=CENTER)
             tabs3_inf_notes[-1].pack(expand=1, fill="both")
 
     btn_34 = Button(tab31, text='Розрахувати', height=1, font=('Rockwell', 10), command=choices_build, state='disabled')
@@ -1057,7 +1057,7 @@ def electrical_voltage():
             messagebox.showerror('Помилка!', 'Ви ще не додали приладів-споживачів, тому ви не можете редагувати')
         print(index)
     btn_edit = Button(tab31, text='Редагувати', height=1, font=('Rockwell', 10), command=openEditWindow)
-    btn_edit.place(relx=0.9, rely=0.255, anchor=CENTER)
+    btn_edit.place(relx=0.5, rely=0.155, anchor=CENTER)
 
 win, win2, win3 = None, None, None
 
