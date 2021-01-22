@@ -9,7 +9,7 @@ from matplotlib.backends._backend_tk import NavigationToolbar2Tk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 from windrose import WindroseAxes
-from numpy import arange, random
+from numpy import arange, random, array
 import mplcursors
 from scipy.interpolate import splrep, splev
 from fpdf import FPDF
@@ -964,6 +964,8 @@ def veu_work():
     tab_child_4_child = ttk.Notebook(tab42)
     tab421 = ttk.Frame(tab_child_4_child)
     tab_child_4_child.add(tab421, text="Енергетична залежність")
+    tab423 = ttk.Frame(tab_child_4_child)
+    tab_child_4_child.add(tab423, text="Обсяги генерування")
     tab422 = ttk.Frame(tab_child_4_child)
     tab_child_4_child.add(tab422, text="Розраховані значення")
 
@@ -1052,10 +1054,11 @@ def veu_work():
             button_win = Button(win2, text='Додати до бази', height=1, font=('Rockwell', 10), command=add_to_tree1)
             button_win.place(relx=0.3, rely=0.7)
 
-
     def veu_delete():
+        return 0
 
-
+    def tower_delete():
+        return 0
 
     def end_input():
         global win3
@@ -1119,6 +1122,32 @@ def veu_work():
                 # toolbar.update()
                 tab5_canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
                 fig.savefig('veu_graph.png')
+
+                tree3 = ttk.Treeview(tab423, show="headings", height=22)
+                tree3.config(columns=('Column1', 'Column2', 'Column3', 'Column4'))
+                tree3.heading("Column1", text="Швидкість вітру, м/с")
+                tree3.heading("Column2", text="Сумарна тривалість, год")
+                tree3.heading("Column3", text="Потужність ВЕУ, кВт")
+                tree3.heading("Column4", text="Енергія вироблена ВЕУ, кВт*год")
+                arr = array(veu_list)
+                arr = arr.transpose()
+                min_V = min(arr[0])
+                max_V = max(arr[0])
+                min_P = min(arr[1])
+                max_P = max(arr[1])
+                step = (max_P - min_P)/(max_V - min_V)
+                for i in range(1, max_V + 1):
+                    hours = random.randint(1, 24*7*2)/2
+                    kVt_step = min_P + (i-1)*step
+                    tree3.insert('', 'end', values=[
+                        i,
+                        hours,
+                        round(kVt_step, 1),
+                        round(kVt_step*hours, 1)
+                    ])
+                tree3.grid(column=0, row=1, sticky='nsew', in_=tab423)
+                tab423.grid_columnconfigure(0, weight=1)
+                tab423.grid_rowconfigure(0, weight=1)
 
                 label_win_21 = Label(tab422, text='В середньому за період генерується:', font=('Rockwell', 14))
                 label_win_21.place(relx=0.15, rely=0.1)
@@ -1205,15 +1234,15 @@ def veu_work():
             button_win.place(relx=0.6, rely=0.7)
 
     entry_4_child_1 = Button(tab41, text='Додати ВЕУ', height=1, font=('Rockwell', 10), command=veu_add)
-    entry_4_child_1.place(relx=0.22, rely=0.2)
+    entry_4_child_1.place(relx=0.12, rely=0.2)
     entry_4_child_2 = Button(tab41, text='Додати башту:', height=1, font=('Rockwell', 10), command=tower_add)
-    entry_4_child_2.place(relx=0.69, rely=0.2)
+    entry_4_child_2.place(relx=0.59, rely=0.2)
     entry_4_child_3 = Button(tab41, text='Розрахувати', height=1, font=('Rockwell', 11), command=end_input)
     entry_4_child_3.place(relx=0.46, rely=0.09)
     entry_4_child_1 = Button(tab41, text='Видалити ВЕУ', height=1, font=('Rockwell', 10), command=veu_delete)
-    entry_4_child_1.place(relx=0.22, rely=0.2)
+    entry_4_child_1.place(relx=0.32, rely=0.2)
     entry_4_child_2 = Button(tab41, text='Видалити башту:', height=1, font=('Rockwell', 10), command=tower_delete)
-    entry_4_child_2.place(relx=0.69, rely=0.2)
+    entry_4_child_2.place(relx=0.79, rely=0.2)
 
     tree1 = ttk.Treeview(tab41, show="headings", height=22)
     tree1.config(columns=('Column1', 'Column2', 'Column3'))
