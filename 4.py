@@ -14,7 +14,9 @@ import mplcursors
 from scipy.interpolate import splrep, splev
 from fpdf import FPDF
 from ttkthemes import ThemedStyle
+from tkinter import messagebox
 
+import editWindow
 import progress
 
 mplcursors.cursor(hover=True)
@@ -571,6 +573,31 @@ def electrical_voltage():
     def choices_add():
         tree.insert('', 'end', values=(w_31.get(), 20, 12))
 
+    def custom_destroy(index = None, insert_vals = None):
+        needed_list = None
+        if(index == None):
+            needed_list = all_graphs_electrical_voltage[-1]
+        else:
+            needed_list = all_graphs_electrical_voltage[index]
+        w_en, w_hours = 0, 0
+        for needed_dict in needed_list:
+            for need_dict in needed_list[needed_dict]:
+                if isinstance(need_dict, dict):
+                    saver_opt = need_dict['time_end'].split(':') + need_dict['time_start'].split(':')
+                    w_hours += int(saver_opt[0]) + int(saver_opt[1]) / 60 - int(saver_opt[2]) + int(
+                        saver_opt[3]) / 60
+                    if len(need_dict['energy']) == 1:
+                        w_en += need_dict['energy'][0]
+                    else:
+                        w_en += (need_dict['energy'][0] + need_dict['energy'][1]) / 2
+        w_en = w_en / len(needed_list)
+        if index != None:
+            tree.item(tree.get_children()[index], values=(needed_list["name"], round(w_en, 3), round(w_hours, 3)))
+        else:
+            tree.insert('', 'end', values=(needed_list["name"], round(w_en, 3), round(w_hours, 3)))
+            insert_vals.destroy()
+            btn_34['state'] = 'normal'
+
     def choices_insert():
         def insert_final(what):
             option = w_custom.get()
@@ -625,9 +652,9 @@ def electrical_voltage():
         w_custom2 = ttk.Combobox(insert_vals, values=choices_days, state='readonly', width=10)
         w_custom2.current(0)
         w_custom2.place(relx=0.05, rely=0.85)
-
         graphs_electrical_voltage = {'Понеділок': [], 'Вівторок': [], 'Середа': [], 'Четвер': [],
                                      'П\'ятниця': [], 'Субота': [], 'Неділя': [], 'name': ''}
+
 
         def next_day_check():
             if graphs_electrical_voltage['name'] and graphs_electrical_voltage['Понеділок']:
@@ -761,24 +788,6 @@ def electrical_voltage():
             next_day_check()
             # print(graphs_electrical_voltage)
 
-        def custom_destroy():
-            needed_list = all_graphs_electrical_voltage[-1]
-            w_en, w_hours = 0, 0
-            for needed_dict in needed_list:
-                for need_dict in needed_list[needed_dict]:
-                    if isinstance(need_dict, dict):
-                        saver_opt = need_dict['time_end'].split(':') + need_dict['time_start'].split(':')
-                        w_hours += int(saver_opt[0]) + int(saver_opt[1]) / 60 - int(saver_opt[2]) + int(
-                            saver_opt[3]) / 60
-                        if len(need_dict['energy']) == 1:
-                            w_en += need_dict['energy'][0]
-                        else:
-                            w_en += (need_dict['energy'][0] + need_dict['energy'][1]) / 2
-            w_en = w_en / len(needed_list)
-            tree.insert('', 'end', values=(needed_list["name"], round(w_en, 3), round(w_hours, 3)))
-            insert_vals.destroy()
-            btn_34['state'] = 'normal'
-
         btn_inner_add = Button(insert_vals, text='Додати', height=1, font=('Rockwell', 10), command=custom_add)
         btn_inner_add.place(relx=0.2, rely=0.84)
 
@@ -787,7 +796,7 @@ def electrical_voltage():
         btn_inner_add_2.place(relx=0.4, rely=0.84)
 
         btn_inner_end = Button(insert_vals, text='Завершити додання', height=1, font=('Rockwell', 10),
-                               command=custom_destroy,
+                               command=lambda : custom_destroy(insert_vals=insert_vals),
                                state='disabled')
         btn_inner_end.place(relx=0.7, rely=0.84)
 
@@ -837,7 +846,8 @@ def electrical_voltage():
         entry_energy_active = Entry(insert_vals, validate="key")
         entry_energy_active['validatecommand'] = (entry_energy_active.register(validate_positive_number), '%P')
         entry_energy_active.place(relx=0.45, rely=0.5)
-        entry_energy_passive = Entry(insert_vals, state='disabled')
+        entry_energy_passive = Entry(insert_vals, state='disabled', validate='key')
+        entry_energy_passive['validatecommand'] = (entry_energy_passive.register(validate_positive_number), '%P')
         entry_energy_passive.place(relx=0.45, rely=0.6)
 
         w_custom.bind('<<ComboboxSelected>>', insert_final)
@@ -910,7 +920,7 @@ def electrical_voltage():
                 ax.set_ylabel("Електрична потужність, кВт")  # ось ординат
                 ax.set_xlabel("Час")
                 ax.grid()  # включение отображение сетки
-                dt = ax.bar(x, y)
+                dt = ax.bar(x, y, align='edge')
 
                 ax.xaxis.set_ticks_position('both')
 
@@ -974,7 +984,7 @@ def electrical_voltage():
                 ax.set_xlabel("Зони")  # ось ординат
                 ax.grid()  # включение отображение сетки
                 dt = ax.bar(('Однозонний тариф', 'Двозонний', 'Трьохзонний'),
-                            [sum(y_sum), sum(y_sum) * 0.825, sum(y_sum) * 0.8])
+                            [sum(y_sum), sum(y_sum) * 0.825, sum(y_sum) * 0.8], align='center')
 
                 ax.xaxis.set_ticks_position('both')
                 fig.savefig('lr3p2.png')
@@ -1035,6 +1045,19 @@ def electrical_voltage():
     tab31.grid_columnconfigure(0, weight=1)
     tab31.grid_rowconfigure(0, weight=1)
 
+    def openEditWindow():
+        index = tree.index(tree.selection())
+        def cb(data_device):
+            all_graphs_electrical_voltage[index] = data_device
+            custom_destroy(index=index)
+        if index >= 0 and len(all_graphs_electrical_voltage):
+
+            editWindow.editWindow(tab31, all_graphs_electrical_voltage[index], cb)
+        else:
+            messagebox.showerror('Помилка!', 'Ви ще не додали приладів-споживачів, тому ви не можете редагувати')
+        print(index)
+    btn_edit = Button(tab31, text='Редагувати', height=1, font=('Rockwell', 10), command=openEditWindow)
+    btn_edit.place(relx=0.9, rely=0.255, anchor=CENTER)
 
 win, win2, win3 = None, None, None
 
