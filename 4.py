@@ -1,4 +1,5 @@
 import math
+import subprocess
 from tkinter import *
 import tkinter.filedialog
 from tkinter import ttk
@@ -19,7 +20,8 @@ import webbrowser
 
 average_temperature = 0
 dic_1_4 = {}
-
+len_tree1 = sum(1 for line in open('veu_first_tree.txt', 'r'))
+len_tree2 = sum(1 for line in open('veu_second_tree.txt', 'r'))
 # s = ttk.Style()
 # s = ttk.Style()
 
@@ -299,7 +301,6 @@ def pandas_transforming(file_path):
     tab1_holst = FigureCanvasTkAgg(dynamic_lightning[0], master=tab12)
     cursor = mplcursors.cursor(dynamic_lightning[1], hover=True)
     tab_holst(tab1_holst)
-
 
     for widget in tab13.winfo_children():
         widget.destroy()
@@ -956,7 +957,7 @@ def electrical_voltage():
     tab31.grid_rowconfigure(0, weight=1)
 
 
-win, win2, win3 = None, None, None
+win, win2, win3, win4, win5 = None, None, None, None, None
 
 
 def veu_work():
@@ -973,6 +974,7 @@ def veu_work():
         global win
         if not win or not Toplevel.winfo_exists(win):
             def add_to_tree1():
+                global len_tree1
                 if not entry_win_1.get():
                     label_win_1['foreground'] = 'red'
                 elif entry_win_1.get():
@@ -985,7 +987,8 @@ def veu_work():
                     label_win_1['foreground'] = 'black'
                     label_win_2['foreground'] = 'black'
                     label_win_3['foreground'] = 'black'
-                    tree1.insert('', 'end', values=(entry_win_1.get(), cb_win_2.get(), entry_win_3.get()))
+                    len_tree1 += 1
+                    tree1.insert('', 'end', values=(len_tree1 + 1, entry_win_1.get(), cb_win_2.get(), entry_win_3.get()))
                     with open('veu_first_tree.txt', 'a') as fw:
                         fw.write(entry_win_1.get() + '/|\\' + cb_win_2.get() + '/|\\' + entry_win_3.get())
                         fw.write('\n')
@@ -1013,7 +1016,8 @@ def veu_work():
     def tower_add():
         global win2
         if not win2 or not Toplevel.winfo_exists(win2):
-            def add_to_tree1():
+            def add_to_tree2():
+                global len_tree2
                 if not entry_win_1.get():
                     label_win_1['foreground'] = 'red'
                 elif entry_win_1.get():
@@ -1030,7 +1034,8 @@ def veu_work():
                     label_win_1['foreground'] = 'black'
                     label_win_2['foreground'] = 'black'
                     label_win_3['foreground'] = 'black'
-                    tree2.insert('', 'end', values=(entry_win_1.get(), entry_win_2.get(), entry_win_3.get()))
+                    len_tree2 += 1
+                    tree2.insert('', 'end', values=(len_tree2 + 1, entry_win_1.get(), entry_win_2.get(), entry_win_3.get()))
                     with open('veu_second_tree.txt', 'a') as fw:
                         fw.write(entry_win_1.get() + '/|\\' + entry_win_2.get() + '/|\\' + entry_win_3.get())
                         fw.write('\n')
@@ -1051,14 +1056,80 @@ def veu_work():
             label_win_3.place(relx=0.15, rely=0.5)
             entry_win_3 = Entry(win2)
             entry_win_3.place(relx=0.5, rely=0.5, width=80)
-            button_win = Button(win2, text='Додати до бази', height=1, font=('Rockwell', 10), command=add_to_tree1)
+            button_win = Button(win2, text='Додати до бази', height=1, font=('Rockwell', 10), command=add_to_tree2)
             button_win.place(relx=0.3, rely=0.7)
 
+    # def upgrade_table():
+    #     global tree_array_veu_first
+    #     global tree_array_veu_second
+    #     with open('veu_first_tree.txt', 'r') as fread:
+    #         three_array_veu_first = [i for i in fread.read().split('\n')]
+    #     with open('veu_second_tree.txt', 'r') as fread:
+    #         three_array_veu_second = [i for i in fread.read().split('\n')]
+
     def veu_delete():
-        return 0
+        global win4
+        if not win4 or not Toplevel.winfo_exists(win4):
+            win4 = Toplevel()
+            win4.minsize(300, 200)
+            win4.resizable(False, False)
+            label_win_1 = Label(win4, text='Введіть id:', font=('Rockwell', 10))
+            label_win_1.place(relx=0.15, rely=0.2)
+            entry_win_1 = Entry(win4)
+            entry_win_1.place(relx=0.55, rely=0.2, width=80)
+
+            def safe_delete1():
+                check_val1 = None
+                try:
+                    check_val1 = int(entry_win_1.get())
+                    label_win_1.config(fg="black")
+                    button_del['state'] = 'normal'
+                    entry_win_1.delete(0, 'end')
+                except ValueError:
+                    if not check_val1:
+                        label_win_1.config(fg="red")
+                f = open('veu_first_tree.txt').readlines()
+                f.pop(check_val1)
+                with open('veu_first_tree.txt', 'w') as F:
+                    F.writelines(f)
+                selected_item = tree1.selection()[0]
+                tree1.delete(selected_item)
+                # tree1.config(height=len(tree1.get_children()))
+                win4.destroy()
+            button_del = Button(win4, text='Видалити', height=1, font=('Rockwell', 10), command=safe_delete1)
+            button_del.place(relx=0.1, rely=0.7)
 
     def tower_delete():
-        return 0
+        global win5
+        if not win5 or not Toplevel.winfo_exists(win5):
+            win5 = Toplevel()
+            win5.minsize(300, 200)
+            win5.resizable(False, False)
+            label_win_1 = Label(win5, text='Введіть id:', font=('Rockwell', 10))
+            label_win_1.place(relx=0.15, rely=0.2)
+            entry_win_1 = Entry(win5)
+            entry_win_1.place(relx=0.55, rely=0.2, width=80)
+
+            def safe_delete2():
+                check_val1 = None
+                try:
+                    check_val1 = int(entry_win_1.get())
+                    label_win_1.config(fg="black")
+                    button_del['state'] = 'normal'
+                    entry_win_1.delete(0, 'end')
+                except ValueError:
+                    if not check_val1:
+                        label_win_1.config(fg="red")
+                f = open('veu_second_tree.txt').readlines()
+                f.pop(check_val1)
+                with open('veu_second_tree.txt', 'w') as F:
+                    F.writelines(f)
+                selected_item = tree2.selection()[0]
+                tree2.delete(selected_item)
+                # tree2.config(height=len(tree2.get_children()))
+                win5.destroy()
+            button_del = Button(win5, text='Видалити', height=1, font=('Rockwell', 10), command=safe_delete2)
+            button_del.place(relx=0.1, rely=0.7)
 
     def end_input():
         global win3
@@ -1239,38 +1310,46 @@ def veu_work():
     entry_4_child_2.place(relx=0.59, rely=0.2)
     entry_4_child_3 = Button(tab41, text='Розрахувати', height=1, font=('Rockwell', 11), command=end_input)
     entry_4_child_3.place(relx=0.46, rely=0.09)
-    entry_4_child_1 = Button(tab41, text='Видалити ВЕУ', height=1, font=('Rockwell', 10), command=veu_delete)
-    entry_4_child_1.place(relx=0.32, rely=0.2)
-    entry_4_child_2 = Button(tab41, text='Видалити башту:', height=1, font=('Rockwell', 10), command=tower_delete)
-    entry_4_child_2.place(relx=0.79, rely=0.2)
+    entry_4_child_4 = Button(tab41, text='Видалити ВЕУ', height=1, font=('Rockwell', 10), command=veu_delete)
+    entry_4_child_4.place(relx=0.32, rely=0.2)
+    entry_4_child_5 = Button(tab41, text='Видалити башту:', height=1, font=('Rockwell', 10), command=tower_delete)
+    entry_4_child_5.place(relx=0.79, rely=0.2)
 
     tree1 = ttk.Treeview(tab41, show="headings", height=22)
-    tree1.config(columns=('Column1', 'Column2', 'Column3'))
-    tree1.heading("Column1", text="Назва")
-    tree1.heading("Column2", text="Тип")
-    tree1.heading("Column3", text="Вартість (грн)")
+    tree1.config(columns=('Column1', 'Column2', 'Column3', 'Column4'))
+    tree1.heading("Column1", text="id")
+    tree1.column("Column1", width=30, stretch=NO)
+    tree1.heading("Column2", text="Назва")
+    tree1.heading("Column3", text="Тип")
+    tree1.heading("Column4", text="Вартість (грн)")
     tree1.grid(column=0, row=1, sticky='nsew', in_=tab41)
     tab41.grid_columnconfigure(0, weight=1)
     tab41.grid_rowconfigure(0, weight=1)
 
     tree2 = ttk.Treeview(tab41, show="headings", height=22)
-    tree2.config(columns=('Column1', 'Column2', 'Column3'))
-    tree2.heading("Column1", text="Назва")
-    tree2.heading("Column2", text="Висота (м)")
-    tree2.heading("Column3", text="Вартість (грн)")
+    tree2.config(columns=('Column1', 'Column2', 'Column3', 'Column4'))
+    tree2.heading("Column1", text="id")
+    tree2.column("Column1", width=30, stretch=NO)
+    tree2.heading("Column2", text="Назва")
+    tree2.heading("Column3", text="Висота (м)")
+    tree2.heading("Column4", text="Вартість (грн)")
     tree2.grid(column=1, row=1, sticky='nsew', in_=tab41)
     tab41.grid_columnconfigure(0, weight=1)
     tab41.grid_rowconfigure(0, weight=1)
 
     with open('veu_first_tree.txt', 'r') as fr:
         list_val = [i for i in fr.read().split('\n')]
+        i = 0
         for item in list_val:
-            tree1.insert('', 'end', values=item.split('/|\\'))
+            i += 1
+            tree1.insert('', 'end', values=[str(i)] + item.split('/|\\'))
     with open('veu_second_tree.txt', 'r') as fr:
         list_val = [i for i in fr.read().split('\n')]
+        i = 0
         for item in list_val:
             print(item.split('/|\\'))
-            tree2.insert('', 'end', values=item.split('/|\\'))
+            i += 1
+            tree2.insert('', 'end', values=[str(i)] + item.split('/|\\'))
 
     def tree_click(sample):
         if tree1.focus() and tree2.focus():
